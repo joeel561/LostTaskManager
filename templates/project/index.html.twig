@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProjectController!{% endblock %}
+
+{% block body %}
+{{ parent() }}
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ '/Users/nicolewolf/vue-symfony/src/Controller/ProjectController.php'|file_link(0) }}">src/Controller/ProjectController.php</a></code></li>
+        <li>Your template at <code><a href="{{ '/Users/nicolewolf/vue-symfony/templates/project/index.html.twig'|file_link(0) }}">templates/project/index.html.twig</a></code></li>
+    </ul>
+</div>
+{% endblock %}
