@@ -1,0 +1,65 @@
+security:
+
+   encoders:
+
+       App\Entity\User:
+
+           algorithm: bcrypt
+
+   # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+
+   providers:
+
+       our_db_provider:
+
+           entity:
+
+                class: App\Entity\User
+
+                property: username
+
+   firewalls:
+
+       dev:
+
+           pattern: ^/(_(profiler|wdt)|css|images|js)/
+
+           security: false
+
+       main:
+
+#            pattern: ^/
+
+           anonymous: ~
+
+#            http_basic: ~
+
+           provider: our_db_provider
+
+#            anonymous: true
+
+           # activate different ways to authenticate
+           # http_basic: true
+           # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+
+
+           form_login:
+                 login_path: login
+                 check_path: login
+                 default_target_path: /home
+
+#        secured_area:
+
+#            anonymous: ~
+
+           logout:
+               path: /logout
+               target: /
+
+
+   # Easy way to control access for large sections of your site
+   # Note: Only the *first* access control that matches will be used
+
+   access_control:
+        - { path: ^/home, roles: ROLE_USER }

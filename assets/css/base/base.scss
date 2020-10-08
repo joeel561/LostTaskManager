@@ -1,0 +1,72 @@
+html, body, #app {
+    width: 100%;
+    height: 100%;
+}
+
+
+body {
+    background:$background-color;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    height: 100%;
+    padding-top: 5.5em;
+}
+
+.headline-wrapper {
+    h1 {
+        color: $white;
+        font-size: clamp(1.8em, 2.5vw, 2.8em);
+        font-weight: 600;
+    }
+}
+
+.background {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width:100%;
+    height: 100vh;
+
+    .bg-number-wrapper {
+        position: absolute;
+        bottom: 3em;
+        left: -13em;
+        min-width: 60em;
+        z-index: -1;
+        display: none;
+    }
+
+    .bg-waves-wrapper {
+        position: absolute;
+        width: 100%;
+        top: -13em;
+        right: -5em;
+    }
+
+    .bg-dots-wrapper {
+        position: absolute;
+        bottom: -3em;
+        left: 24em;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .background {
+        .bg-waves-wrapper {
+            width: 820px;
+        }
+    }
+}
+
+@include media-breakpoint-up(xl) {
+    .background {
+        .bg-number-wrapper {
+            display: block;
+        }
+    }
+}
+

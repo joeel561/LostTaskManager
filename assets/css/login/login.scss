@@ -1,0 +1,180 @@
+body {
+    background:$background-color;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.login-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.auth-form {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 1.7em;
+
+    .auth-form-wrapper {
+        background: #fff;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        height: 100%;
+        min-height: 490px;
+        border-radius: 1.7em;
+        padding: 5em 1em 0em 1em;
+        z-index: 1;
+    }
+
+    .form-group {
+        padding: 0;
+        position: relative;
+        margin-bottom: 2.5em;
+
+        label {
+            position: absolute;
+            top:0.4em;
+            color: $text-color;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: 0.2s;
+            display: block;
+            cursor: text;
+        }
+
+        .form-control {
+            outline: 0;
+            padding: 6px 0px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            border-radius: 0;
+            box-shadow: none;
+            color: $primary;
+            font-size: 1.2em;
+            font-weight: 700;
+            caret-color: $text-color;
+
+            &::placeholder {
+                color: transparent;
+                font-weight: 700;
+            }
+        }
+
+        input[type="password"] {
+            color: $text-color;
+        }
+
+        .form-control:focus,
+        .form-control:valid {
+            ~  label {
+                position: absolute;
+                display: block;
+                top: -1.2em;
+                color: #868686;
+                font-size: 0.75em;
+                text-transform: uppercase;
+                transition: 0.2s;
+            }
+        }
+    }
+
+    .submit-btn {
+        text-align:right;
+        margin-top: 1.8em;
+        display: inline-block;
+        width: 100%;
+
+        .btn-success {
+            height: 3.48em;
+            width: 3.48em;
+            padding: 0.65em;
+            margin: auto;
+            border-radius:0.9em;
+        }
+    }
+
+    .register-btn {
+        text-align:right;
+        margin-bottom: 2em;
+    }
+
+    .btn-success {
+        width: auto;
+        display: inline-block;
+        padding: 0.6em 1.8em;
+        border-radius:0.6em;
+        border: none;
+        background-color:$primary;
+
+        &:active {
+            background:#FC2345;
+        }
+        svg {
+            width: 1em;
+            height: 1em;
+            font-size: 1.9em;
+            margin-right: 0.15em;
+            stroke:#fff;
+        }
+    }
+
+    .btn-wrapper {
+        margin-top: auto;
+        color: #1a1a1a;
+        font-size: 0.9em;
+        a {
+            color: #FC2345;
+        }
+    }
+    h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: clamp(1.8em, 2.5vw, 2.8em);
+        font-weight: 700;
+        margin-bottom: 1.3em;
+        color: $text-color;
+        margin-top: 0;
+        text-transform: uppercase;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .auth-form {
+        width: 30em;
+
+        &:before {
+            content: '';
+            width: 120px;
+            height: 120px;
+            position: absolute;
+            top: -1.6em;
+            left:-1.4em;
+            z-index: -1;
+            background: url('../../img/dots.svg');
+        }
+        &:after {
+            content: '';
+            width: 120px;
+            height: 120px;
+            position: absolute;
+            bottom: 3.6em;
+            right:-2.4em;
+            z-index: -1;
+            background: url('../../img/dots.svg');
+        }
+
+        .auth-form-wrapper {
+            padding: 5em 3em 0em 3em;
+        }
+    }
+}
+
+
+@include media-breakpoint-up(lg) {
+    .auth-form {
+        min-height: 35em;
+    }
+}
