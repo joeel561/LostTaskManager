@@ -47,6 +47,7 @@ class TaskController extends AbstractController
 
         $task = new Task();
         $task->setName($content['name']);
+        $task->setName($content['description']);
         $task->setUser($this->getUser());
         $task->setProject($project);
         $this->updateDatabase($task);

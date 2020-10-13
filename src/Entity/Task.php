@@ -20,6 +20,10 @@ class Task
      */
     private $name;
     /**
+     * @ORM\Column(type="string", name="description", length=200)
+     */
+    private $description;
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="tasks")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -60,6 +64,17 @@ class Task
     public function setName($name)
     {
         $this->name = $name;
+    }
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
     /**
      * @return mixed
