@@ -57,12 +57,11 @@ class ProjectController extends AbstractController
     public function saveProjects(Request $request)
     {
         $content = json_decode($request->getContent(), true);
-
-        if($content['name']) {
-
+        if($content['name'] && $content['description']) {
             $project = new Project();
             $project->setUser($this->getUser());
             $project->setName($content['name']);
+            $project->setDescription($content['description']);
             $project->setTasks([]);
             $project->setCreatedAt(new \DateTime());
             $project->setUpdatedAt(new \DateTime());
