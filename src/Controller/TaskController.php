@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Task;
+use App\Repository\ProjectRepository;
+use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,21 +15,11 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-
 class TaskController extends AbstractController
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-    /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
-     */
-    private $projectRepository;
-    /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
-     */
-    private $taskRepository;
+    private EntityManagerInterface $entityManager;
+    private ProjectRepository $projectRepository;
+    private TaskRepository $taskRepository;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -39,7 +31,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/projects/{id}/tasks", name="task")
      */
-    public function createTask(Request $request,int $id)
+    public function createTask(Request $request, int $id): Response
     {
         $content = json_decode($request->getContent(), true);
 
@@ -57,7 +49,7 @@ class TaskController extends AbstractController
         return new Response($jsonContent, Response::HTTP_OK);
     }
 
-    public function serializeObject($object)
+    public function serializeObject(object $object): string
     {
         $encoders = new JsonEncoder();
         $defaultContext = [
@@ -65,15 +57,15 @@ class TaskController extends AbstractController
                 return $obj->getId();
             },
         ];
-        
+
         $normalizers = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-        $serializer = new Serializer(array($normalizers), array($encoders));
+        $serializer = new Serializer([$normalizers], [$encoders]);
         $jsonContent = $serializer->serialize($object, 'json');
 
         return $jsonContent;
     }
 
-    public function updateDatabase($object)
+    public function updateDatabase(object $object)
     {
         $this->entityManager->persist($object);
         $this->entityManager->flush();

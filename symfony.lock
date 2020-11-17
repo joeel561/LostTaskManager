@@ -2,6 +2,12 @@
     "composer/package-versions-deprecated": {
         "version": "1.11.99"
     },
+    "composer/semver": {
+        "version": "3.2.4"
+    },
+    "composer/xdebug-handler": {
+        "version": "1.4.5"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -84,6 +90,27 @@
     "egulias/email-validator": {
         "version": "2.1.19"
     },
+    "friendsofphp/php-cs-fixer": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.2",
+            "ref": "cc05ab6abf6894bddb9bbd6a252459010ebe040b"
+        },
+        "files": [
+            ".php_cs.dist"
+        ]
+    },
+    "laminas/laminas-code": {
+        "version": "3.5.0"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.0"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
     "monolog/monolog": {
         "version": "2.1.1"
     },
@@ -95,6 +122,9 @@
     },
     "php": {
         "version": "7.3"
+    },
+    "php-cs-fixer/diff": {
+        "version": "v1.3.1"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -531,6 +561,9 @@
     },
     "twig/twig": {
         "version": "v3.0.5"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.9.1"
