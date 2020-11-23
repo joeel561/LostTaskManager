@@ -1,0 +1,45 @@
+
+.project-column {
+    background: #2F8C82;
+    border-radius: 1em;
+    padding: 1em 1em;
+    min-height: 7.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-bottom: 1em;
+
+    h3 {
+        font-size: clamp(2em, 2.5vw, 2.6em);
+        color: $white;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 0;
+    }
+
+    span {
+        font-size: 0.9em;
+        color: $white;
+    }
+
+    .icon-tabler-arrow-narrow-right {
+        position: absolute;
+        top: 0.1em;
+        right: 0.5em;
+        width: 1em;
+        height: 1em;
+        font-size: 1.9em;
+        margin-right: 0.15em;
+        line-height:0.9em;
+        stroke:#fff;
+    }
+}
+
+.projects-row {
+    padding-left: 0;
+    padding-right: 0;
+    .col-2 {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

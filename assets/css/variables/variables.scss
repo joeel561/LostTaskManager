@@ -1,3 +1,11 @@
 $background-color: #141E30;
 $text-color: #1a1a1a;
 $primary:#F36;
+$btn-secondary: #283955;
+$white:#fff;
+$dark: #283955;
+$nav-active: #1A263B;
+$success-color: #69BD74;
+// Include Bootstrap and BootstrapVue SCSS files
+@import 'node_modules/bootstrap-scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';

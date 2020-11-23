@@ -23,13 +23,13 @@ class Project
      * @ORM\Column(type="string", name="description", length=200)
      */
     private $description;
+
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="project")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $user;
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="projects")
+     **/
+    private $users;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="projects")
      */
     private $tasks;
     /**
@@ -80,12 +80,29 @@ class Project
         $this->description = $description;
     }
     /**
-     * @param mixed $user
+     * @param mixed $users
      */
-    public function setUser(User $user)
+    public function setUsers($users)
     {
-        $this->user = $user;
+        $this->users = $users;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers(): ArrayCollection
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param User $users
+     */
+    public function addUsers(Users $users): void
+    {
+        $this->users[] = $users;
+    }
+
     /**
      * @return mixed
      */
@@ -93,6 +110,7 @@ class Project
     {
         return $this->tasks;
     }
+
     /**
      * @param mixed $tasks
      */
@@ -132,5 +150,9 @@ class Project
     {
         // TODO: Implement __toString() method.
         return $this->name;
+    }
+
+    public function __construct() {
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }

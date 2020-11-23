@@ -1,8 +1,7 @@
 @import "variables/variables.scss";
-@import 'node_modules/bootstrap/scss/bootstrap';
-@import 'node_modules/bootstrap-vue/src/index.scss';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 @import "base/base.scss";
 @import "project/project.scss";
 @import "login/login.scss";
-
+@import "base/sidebar.scss";
+@import "base/modal.scss";

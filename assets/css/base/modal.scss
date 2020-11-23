@@ -1,0 +1,91 @@
+.modal-content {
+    border-radius: 1.2rem;
+    padding: 1.2rem 1rem;
+}
+
+.modal-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.modal-body {
+    .form-group {
+        display: flex;
+        align-items:baseline;
+        margin-bottom: 1.5rem;
+
+        label {
+            font-size: 0.8rem;
+            padding-right: 1.5rem;
+            width: 30%;
+        }
+
+        input {
+            border: none;
+            border-bottom: 1px solid #e2e2e2;
+            border-radius: 0;
+            padding: 0;
+            font-size: 0.8rem;
+            height: 1.5rem;
+        }
+        
+        textarea {
+            font-size: 0.8em;
+            border: 1px solid #e2e2e2;
+        }
+    }
+
+    #date-picker__value_ {
+        width: 80%;
+    }
+
+    .bv-no-focus-ring {
+        width: 100%;
+    }
+
+    .b-form-datepicker {
+        border: none;
+        border-bottom: 1px solid #e2e2e2;
+        border-radius: 0;
+    }
+}
+
+.modal-footer {
+    padding:0 1rem;
+    border-top:none;
+
+    .btn-primary {
+        background: $success-color;
+        &:hover {
+            background:lighten($success-color, 15%);
+        }
+    }
+}
+
+.modal-header {
+    border-bottom: none;
+
+    .close {
+        padding:0;
+        position: absolute;
+        top:0.5rem;
+        right: 0.6rem;
+        background: #fff;
+        width: 1.9rem;
+        height: 1.9rem;
+        opacity: 1;
+        color: $text-color;
+        border-radius: 50%;
+        box-shadow:1px 1px 4px #0e0e0e2e;
+        text-align: center;
+    }
+    .close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
+        opacity: 1;
+    }
+}
+
+@include media-breakpoint-up(md) { 
+    .modal-dialog {
+        margin-top: 9.75rem;
+    }
+}

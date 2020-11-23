@@ -1,0 +1,35 @@
+.sidebar-component {
+    .btn {
+        margin-bottom:3em;
+        padding: 0;
+
+        svg {
+            stroke: $white;
+            width: 1em;
+            height: 1em;
+            font-size: 2.5em;
+        }
+    }
+
+    .nav-link {
+        color: #A0A4AA;
+        font-size: 0.9em;
+        margin-bottom: 0.7em;
+        transition: all ease-in .3s;
+        padding: 0.7em 1em;
+        svg {
+            margin-right: 0.7em;
+        }
+
+        &.active {
+            background: $nav-active;
+            border-radius: 1em;
+        }
+
+        &:hover {
+            background: $nav-active;
+            border-radius: 1em;
+            transition: ease-out .3s;
+        }
+    }
+}
