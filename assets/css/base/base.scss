@@ -11,7 +11,7 @@ body {
 
 .container {
     height: 100%;
-    padding-top: 5.5em;
+    padding-top: 2.5em;
 }
 
 .headline-wrapper {
@@ -19,6 +19,7 @@ body {
         color: $white;
         font-size: clamp(1.8em, 2.5vw, 2.8em);
         font-weight: 600;
+        margin-bottom: 0;
     }
 }
 
@@ -53,6 +54,22 @@ body {
         left: 24em;
     }
 }
+
+.btn-secondary, .btn-primary {
+    border-radius:1.5rem;
+    border: none;
+    padding:0.5rem 1.5rem;
+    font-size:0.8rem;
+}
+
+.btn-secondary {
+    background:$btn-secondary;
+    color: #fff;
+    &:hover {
+        background:lighten($btn-secondary, 20%);
+    }
+}
+
 
 @include media-breakpoint-up(md) {
     .background {

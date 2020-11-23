@@ -3,12 +3,16 @@ global.axios = require('axios');
 import Vue from 'vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import Home from './components/HomeComponent';
-import Headline from './components/HeadlineComponent';
+import HeadlineComponent from './components/HeadlineComponent';
 import Login from './components/LoginComponent';
+import Sidebar from './components/SidebarComponent';
+
+Vue.component('headline-component', HeadlineComponent);
+Vue.component('sidebar', Sidebar);
 
 new Vue({
    el: '#app',
-   components: { Home, Login, Headline }
+   components: { Home, Login, HeadlineComponent, Sidebar }
 });
 
 const filter = function(text, length, clamp) {

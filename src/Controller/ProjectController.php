@@ -21,6 +21,9 @@ class ProjectController extends AbstractController
 {
     /**
      * @var EntityManagerInterface
+     * 
+     * 
+     * 
      */
     private $entityManager;
     /**
@@ -61,7 +64,9 @@ class ProjectController extends AbstractController
             $project = new Project();
             $project->setUser($this->getUser());
             $project->setName($content['name']);
-            $project->setDescription($content['description']);
+            $project->setDescription($content['de 
+            
+            scription']);
             $project->setTasks([]);
             $project->setCreatedAt(new \DateTime());
             $project->setUpdatedAt(new \DateTime());
@@ -76,7 +81,7 @@ class ProjectController extends AbstractController
     }
 
     public function serializeObject($object)
-    {
+    { 
         $encoders = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($obj) {

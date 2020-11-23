@@ -24,10 +24,10 @@ class Task
      */
     private $description;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="users")
+     * 
      */
-    private $project;
+    private $projects;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
      * @ORM\JoinColumn(nullable=true)
@@ -79,16 +79,16 @@ class Task
     /**
      * @return mixed
      */
-    public function getProject()
+    public function getProjects()
     {
-        return $this->project;
+        return $this->projects;
     }
     /**
-     * @param mixed $project
+     * @param mixed $projects
      */
-    public function setProject($project)
+    public function setProjects($projects)
     {
-        $this->project = $project;
+        $this->projects = $projects;
     }
     /**
      * @return mixed

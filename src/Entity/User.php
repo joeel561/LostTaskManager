@@ -88,34 +88,27 @@ class User implements UserInterface, \Serializable
 
    private $isActive;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="users")
+     * @ORM\JoinTable(name="users_projects")
+     */
 
-
-   /**
-
-    * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="user")
-
-    */
-
-   private $project;
-
-
+   private $projects;
 
    /**
 
-    * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user")
+    * @ORM\ManyToMany(targetEntity="App\Entity\Task", mappedBy="user")
 
     */
 
    private $tasks;
-
-
-
 
    public function __construct()
 
    {
 
        $this->isActive = true;
+       $this->project = new \Doctrine\Common\Collections\ArrayCollection();
 
    }
 
@@ -253,11 +246,11 @@ class User implements UserInterface, \Serializable
 
     */
 
-   public function getProject()
+   public function getProjects()
 
    {
 
-       return $this->project;
+       return $this->projects;
 
    }
 
@@ -265,15 +258,15 @@ class User implements UserInterface, \Serializable
 
    /**
 
-    * @param mixed $project
+    * @param mixed $projects
 
     */
 
-   public function setProject($project)
+   public function setProjects($project)
 
    {
 
-       $this->project = $project;
+       $this->projects = $projects;
 
    }
 
