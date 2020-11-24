@@ -45,7 +45,7 @@ class ProjectController extends AbstractController
      */
     public function index()
     {
-        $projects = $this->projectRepository->findByUser($this->getOwner()->getId());
+        $projects = $this->projectRepository->findByUser($this->getUser()->getId());
         $jsonContent = $this->serializeObject($projects);
 
         return new Response($jsonContent, Response::HTTP_OK);
