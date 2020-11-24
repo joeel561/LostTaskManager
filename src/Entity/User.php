@@ -79,17 +79,17 @@ class User implements UserInterface, \Serializable
     private $isActive;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Project", inversedBy="owner")
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="owner")
      */
 
-    private $owned_projects;
+    private $ownedProjects;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="assigned_projecs")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="assignedUsers")
      * @ORM\JoinTable(name="users_projects")
      */
 
-    private $projects;
+    private $assignedProjects;
 
     /**
 
@@ -225,6 +225,24 @@ class User implements UserInterface, \Serializable
         $this->isActive = $isActive;
     }
 
+    /**
+     * @return mixed
+     */
+
+    public function getOwnedProjects()
+    {
+        return $this->ownedProjects;
+    }
+
+    /**
+     * @param mixed $ownedProjects
+     */
+
+    public function setOwnedProjects($ownedProjects)
+    {
+        $this->ownedProjects = $ownedProjects;
+    }
+
 
 
     /**
@@ -233,26 +251,19 @@ class User implements UserInterface, \Serializable
 
      */
 
-    public function getProjects()
-
+    public function getAssignedProjects()
     {
-
-        return $this->projects;
+        return $this->assignedProjects;
     }
 
-
-
     /**
-
-     * @param mixed $projects
+     * @param mixed $assignedProjects
 
      */
 
-    public function setProjects($project)
-
+    public function setAssignedProjects($assignedProjects)
     {
-
-        $this->projects = $projects;
+        $this->assignedProjects = $assignedProjects;
     }
 
 
