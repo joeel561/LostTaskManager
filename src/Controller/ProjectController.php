@@ -45,10 +45,21 @@ class ProjectController extends AbstractController
      */
     public function index()
     {
-        $projects = $this->projectRepository->findByUser($this->getUser()->getId());
+        $projects = $this->projectRepository->findByUser($this->getOwner()->getId());
         $jsonContent = $this->serializeObject($projects);
 
         return new Response($jsonContent, Response::HTTP_OK);
+    }
+
+    public function assignUsers()
+    {
+        $assignUsers = $this->getAssignedUser();
+        $projects = [ ];
+        foreach($assignUser as $key => $user) {
+            $projects[] = $this->projectRepository->findByUser($this->getUser()->getId());
+        }
+
+        return $projects;
     }
 
     /** 
@@ -62,11 +73,10 @@ class ProjectController extends AbstractController
         $content = json_decode($request->getContent(), true);
         if($content['name'] && $content['description']) {
             $project = new Project();
-            $project->setUser($this->getUser());
+            $project->setOwner($this->getUser());
             $project->setName($content['name']);
-            $project->setDescription($content['de 
-            
-            scription']);
+            $project->setDescription($content['description']);
+            $project->setAssignedUser($content['assignedUser']);
             $project->setTasks([]);
             $project->setCreatedAt(new \DateTime());
             $project->setUpdatedAt(new \DateTime());
