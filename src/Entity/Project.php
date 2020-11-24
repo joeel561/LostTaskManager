@@ -25,9 +25,14 @@ class Project
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="projects")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", mappedBy="owned_projects")
+     */
+    private $owner;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="assigned_projects")
      **/
-    private $users;
+    private $assigned_user;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="projects")
      */
@@ -79,28 +84,37 @@ class Project
     {
         $this->description = $description;
     }
+
     /**
-     * @param mixed $users
+     * @param mixed $owner
      */
-    public function setUsers($users)
+    public function setOwner(User $newOwner)
     {
-        $this->users = $users;
+        $this->owner = $newOwner;
     }
 
     /**
-     * @return ArrayCollection
+     * @param mixed
      */
-    public function getUsers(): ArrayCollection
+    public function getOwner()
     {
-        return $this->users;
+        return $this->owner;
     }
 
     /**
-     * @param User $users
+     * @param mixed $assignedUser
      */
-    public function addUsers(Users $users): void
+    public function setAssignedUser($users)
     {
-        $this->users[] = $users;
+        $this->assigned_user = $users;
+    }
+
+    /**
+     * @param mixed $assignedUsers
+     */
+    public function getAssignedUser()
+    {
+        return $this->assigned_user;
     }
 
     /**

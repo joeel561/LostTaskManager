@@ -17,431 +17,397 @@ class User implements UserInterface, \Serializable
 
 {
 
-   /**
-
-    * @ORM\Id
-
-    * @ORM\GeneratedValue
-
-    * @ORM\Column(type="integer")
-
-    */
-
-   private $id;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
 
-
-   /**
-
-    * @ORM\Column(type="string", length=255, unique=true)
-
-    * @Assert\NotBlank()
-
-    * @Assert\Email()
-
-    */
-
-   private $email;
-
-
-
-   /**
-
-    * @ORM\Column(type="string", length=100, unique=true)
-
-    * @Assert\NotBlank()
-
-    */
-
-   private $username;
-
-
-
-   /**
-
-    * @Assert\NotBlank()
-
-    * @Assert\Length(max="4096")
-
-    */
-
-   private $plainPassword;
-
-
-
-   /**
-
-    * @ORM\Column(type="string", length=64)
-
-    */
-
-   private $password;
-
-
-
-
-   /**
-
-    * @ORM\Column(name="is_active", type="boolean")
-
-    */
-
-   private $isActive;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="users")
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     */
+    private $email;
+
+
+
+    /**
+
+     * @ORM\Column(type="string", length=100, unique=true)
+
+     * @Assert\NotBlank()
+
+     */
+
+    private $username;
+
+
+
+    /**
+
+     * @Assert\NotBlank()
+
+     * @Assert\Length(max="4096")
+
+     */
+
+    private $plainPassword;
+
+
+
+    /**
+
+     * @ORM\Column(type="string", length=64)
+
+     */
+
+    private $password;
+
+
+
+
+    /**
+
+     * @ORM\Column(name="is_active", type="boolean")
+
+     */
+
+    private $isActive;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", inversedBy="owner")
+     */
+
+    private $owned_projects;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="assigned_projecs")
      * @ORM\JoinTable(name="users_projects")
      */
 
-   private $projects;
+    private $projects;
 
-   /**
+    /**
 
-    * @ORM\ManyToMany(targetEntity="App\Entity\Task", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Task", mappedBy="user")
 
-    */
+     */
 
-   private $tasks;
+    private $tasks;
 
-   public function __construct()
+    public function __construct()
 
-   {
+    {
 
-       $this->isActive = true;
-       $this->project = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
+        $this->project = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
-   }
 
 
+    /**
 
-   /**
+     * Returns the username used to authenticate the user.
 
-    * Returns the username used to authenticate the user.
+     *
 
-    *
+     * @return string The username
 
-    * @return string The username
+     */
 
-    */
+    public function getUsername()
 
-   public function getUsername()
+    {
 
-   {
+        return $this->username;
+    }
 
-       return $this->username;
 
-   }
 
+    /**
 
+     * @param mixed $username
 
-   /**
+     */
 
-    * @param mixed $username
+    public function setUsername($username)
 
-    */
+    {
 
-   public function setUsername($username)
+        $this->username = $username;
+    }
 
-   {
+    /**
 
-       $this->username = $username;
+     * @return mixed
 
-   }
+     */
 
-   /**
+    public function getId()
 
-    * @return mixed
+    {
 
-    */
+        return $this->id;
+    }
 
-   public function getId()
+    /**
 
-   {
+     * @param mixed $id
 
-       return $this->id;
+     */
 
-   }
+    public function setId($id)
 
-   /**
+    {
 
-    * @param mixed $id
+        $this->id = $id;
+    }
 
-    */
 
-   public function setId($id)
 
-   {
+    /**
 
-       $this->id = $id;
+     * @return mixed
 
-   }
+     */
 
+    public function getEmail()
 
+    {
 
-   /**
+        return $this->email;
+    }
 
-    * @return mixed
 
-    */
 
-   public function getEmail()
+    /**
 
-   {
+     * @param mixed $email
 
-       return $this->email;
+     */
 
-   }
+    public function setEmail($email)
 
+    {
 
+        $this->email = $email;
+    }
 
-   /**
 
-    * @param mixed $email
 
-    */
+    /**
 
-   public function setEmail($email)
+     * @return mixed
 
-   {
+     */
 
-       $this->email = $email;
+    public function getisActive()
 
-   }
+    {
 
+        return $this->isActive;
+    }
 
+    /**
 
-   /**
+     * @param mixed $isActive
 
-    * @return mixed
+     */
 
-    */
+    public function setIsActive($isActive)
 
-   public function getisActive()
+    {
 
-   {
+        $this->isActive = $isActive;
+    }
 
-       return $this->isActive;
 
-   }
 
-   /**
+    /**
 
-    * @param mixed $isActive
+     * @return mixed
 
-    */
+     */
 
-   public function setIsActive($isActive)
+    public function getProjects()
 
-   {
+    {
 
-       $this->isActive = $isActive;
+        return $this->projects;
+    }
 
-   }
 
 
+    /**
 
-   /**
+     * @param mixed $projects
 
-    * @return mixed
+     */
 
-    */
+    public function setProjects($project)
 
-   public function getProjects()
+    {
 
-   {
+        $this->projects = $projects;
+    }
 
-       return $this->projects;
 
-   }
 
+    /**
 
+     * @return mixed
 
-   /**
+     */
 
-    * @param mixed $projects
+    public function getTasks()
 
-    */
+    {
 
-   public function setProjects($project)
+        return $this->tasks;
+    }
 
-   {
 
-       $this->projects = $projects;
 
-   }
+    /**
 
+     * @param mixed $tasks
 
+     */
 
-   /**
+    public function setTasks($tasks)
 
-    * @return mixed
+    {
 
-    */
+        $this->tasks = $tasks;
+    }
 
-   public function getTasks()
+    /**
+     * Returns the salt that was originally used to encode the password.
+     * This can return null if the password was not encoded using a salt.
+     * @return string|null The salt
 
-   {
+     */
 
-       return $this->tasks;
+    public function getSalt()
 
-   }
+    {
 
+        return null;
+    }
 
 
-   /**
 
-    * @param mixed $tasks
+    /**
 
-    */
+     * @return mixed
 
-   public function setTasks($tasks)
+     */
 
-   {
+    public function getPlainPassword()
 
-       $this->tasks = $tasks;
+    {
 
-   }
+        return $this->plainPassword;
+    }
 
-   /**
 
-    * Returns the salt that was originally used to encode the password.
 
-    *
+    /**
 
-    * This can return null if the password was not encoded using a salt.
+     * @param mixed $password
 
-    *
+     */
 
-    * @return string|null The salt
+    public function setPlainPassword($password)
 
-    */
+    {
 
-   public function getSalt()
+        $this->plainPassword = $password;
+    }
 
-   {
+    /**
 
-       return null;
+     * Returns the password used to authenticate the user.
 
-   }
+     *
 
+     * @return string The password
 
+     */
 
-   /**
+    public function getPassword()
 
-    * @return mixed
+    {
 
-    */
+        return $this->password;
+    }
 
-   public function getPlainPassword()
 
-   {
 
-       return $this->plainPassword;
+    /**
 
-   }
+     * @param mixed $password
 
+     */
 
+    public function setPassword($password)
 
-   /**
+    {
 
-    * @param mixed $password
+        $this->password = $password;
+    }
 
-    */
+    /**
 
-   public function setPlainPassword($password)
+     * @return array
 
-   {
+     */
 
-       $this->plainPassword = $password;
+    public function getRoles()
 
-   }
+    {
 
-   /**
+        return array('ROLE_USER');
+    }
 
-    * Returns the password used to authenticate the user.
+    public function eraseCredentials()
 
-    *
+    {
+    }
 
-    * @return string The password
 
-    */
 
-   public function getPassword()
+    public function serialize()
 
-   {
+    {
 
-       return $this->password;
+        return serialize(array(
 
-   }
+            $this->id,
 
+            $this->username,
 
+            $this->password,
 
-   /**
+        ));
+    }
 
-    * @param mixed $password
+    public function unserialize($serialized)
 
-    */
+    {
 
-   public function setPassword($password)
+        list(
 
-   {
+            $this->id,
 
-       $this->password = $password;
+            $this->username,
 
-   }
+            $this->password,
 
-   /**
-
-    * @return array
-
-    */
-
-   public function getRoles()
-
-   {
-
-       return array('ROLE_USER');
-
-   }
-
-   public function eraseCredentials()
-
-   {
-
-   }
-
-
-
-   public function serialize()
-
-   {
-
-       return serialize(array(
-
-           $this->id,
-
-           $this->username,
-
-           $this->password,
-
-       ));
-
-   }
-
-   public function unserialize($serialized)
-
-   {
-
-       list(
-
-           $this->id,
-
-           $this->username,
-
-           $this->password,
-
-           ) = unserialize($serialized);
-
-   }
-
+        ) = unserialize($serialized);
+    }
 }
