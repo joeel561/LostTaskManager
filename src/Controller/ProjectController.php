@@ -41,12 +41,12 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/projects", name="project")
+     * @Route("/projects", name="project")y
      */
     public function index()
     {
-        $projects = $this->projectRepository->findByUser($this->getUser()->getId());
-        $jsonContent = $this->serializeObject($projects);
+        $owner = $this->projectRepository->findOwner($this->getUser());
+        $jsonContent = $this->serializeObject($owner);
 
         return new Response($jsonContent, Response::HTTP_OK);
     }
@@ -59,14 +59,14 @@ class ProjectController extends AbstractController
 
     public function saveProjects(Request $request)
     {
+        $owner = $this->getUser();
         $content = json_decode($request->getContent(), true);
+
         if($content['name'] && $content['description']) {
             $project = new Project();
-            $project->setUser($this->getUser());
+            $project->setOwner($owner);
             $project->setName($content['name']);
-            $project->setDescription($content['de 
-            
-            scription']);
+            $project->setDescription($content['description']);
             $project->setTasks([]);
             $project->setCreatedAt(new \DateTime());
             $project->setUpdatedAt(new \DateTime());
