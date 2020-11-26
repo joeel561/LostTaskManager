@@ -51,6 +51,17 @@ class ProjectController extends AbstractController
         return new Response($jsonContent, Response::HTTP_OK);
     }
 
+    public function assignUsers()
+    {
+        $assignUsers = $this->getAssignedUser();
+        $projects = [ ];
+        foreach($assignUser as $key => $user) {
+            $projects[] = $this->projectRepository->findByUser($this->getUser()->getId());
+        }
+
+        return $projects;
+    }
+
     /** 
      * @param Request $request
      * @return Response
@@ -64,10 +75,9 @@ class ProjectController extends AbstractController
 
         if($content['name'] && $content['description']) {
             $project = new Project();
-            $project->setOwner($owner);
+            $project->setOwner($this->getUser());
             $project->setName($content['name']);
             $project->setDescription($content['description']);
-            $project->setTasks([]);
             $project->setCreatedAt(new \DateTime());
             $project->setUpdatedAt(new \DateTime());
             $this->updateDatabase($project); 
