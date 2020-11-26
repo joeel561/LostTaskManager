@@ -35,10 +35,6 @@ class Project
     private $assignedUsers;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="projects")
-     */
-    private $tasks;
-    /**
      * @ORM\Column(type="datetime", name="created_at")
      */
     private $createdAt;
@@ -89,7 +85,7 @@ class Project
     /**
      * @param mixed $owner
      */
-    public function setOwner($newOwner)
+    public function setOwner(User $newOwner)
     {
         $this->owner = $newOwner;
     }
@@ -99,7 +95,7 @@ class Project
      */
     public function getOwner()
     {
-       return $this->owner;
+        return $this->owner;
     }
 
     /**
@@ -110,26 +106,14 @@ class Project
         $this->assignedUsers = $users;
     }
 
+    /**
+     * @param mixed $assignedUsers
+     */
     public function getAssignedUsers()
     {
-       return $this->assignedUsers;
+        return $this->assignedUsers;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTasks()
-    {
-        return $this->tasks;
-    }
-
-    /**
-     * @param mixed $tasks
-     */
-    public function setTasks($tasks)
-    {
-        $this->tasks = $tasks;
-    }
     /**
      * @return mixed
      */
