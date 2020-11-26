@@ -67,10 +67,7 @@ class User implements UserInterface, \Serializable
 
     private $password;
 
-
-
-
-    /**
+   /**
 
      * @ORM\Column(name="is_active", type="boolean")
 
@@ -89,7 +86,8 @@ class User implements UserInterface, \Serializable
      * @ORM\JoinTable(name="users_projects")
      */
 
-    private $assignedProjects;
+   private $assignedProjects;
+
 
     /**
 
@@ -264,36 +262,6 @@ class User implements UserInterface, \Serializable
     public function setAssignedProjects($assignedProjects)
     {
         $this->assignedProjects = $assignedProjects;
-    }
-
-
-
-    /**
-
-     * @return mixed
-
-     */
-
-    public function getTasks()
-
-    {
-
-        return $this->tasks;
-    }
-
-
-
-    /**
-
-     * @param mixed $tasks
-
-     */
-
-    public function setTasks($tasks)
-
-    {
-
-        $this->tasks = $tasks;
     }
 
     /**

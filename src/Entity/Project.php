@@ -34,10 +34,6 @@ class Project
      **/
     private $assignedUsers;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="projects")
-     */
-    private $tasks;
-    /**
      * @ORM\Column(type="datetime", name="created_at")
      */
     private $createdAt;
@@ -117,21 +113,6 @@ class Project
         return $this->assignedUsers;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTasks()
-    {
-        return $this->tasks;
-    }
-
-    /**
-     * @param mixed $tasks
-     */
-    public function setTasks($tasks)
-    {
-        $this->tasks = $tasks;
-    }
     /**
      * @return mixed
      */
