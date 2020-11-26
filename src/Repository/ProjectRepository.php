@@ -19,6 +19,18 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
+    public function findOwner($owner)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        return $qb->select('p')
+            ->andWhere('p.owner = :oid')
+            ->setParameter('oid', $owner)
+            ->getQuery()
+            ->getArrayResult();
+        ;
+    }
+
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */
