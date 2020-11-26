@@ -23,16 +23,7 @@ class Task
      * @ORM\Column(type="string", name="description", length=200)
      */
     private $description;
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="users")
-     * 
-     */
-    private $projects;
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $user;
+
     /**
      * @ORM\Column(type="datetime", name="started_at")
      */
@@ -75,34 +66,6 @@ class Task
     public function setDescription($description)
     {
         $this->description = $description;
-    }
-    /**
-     * @return mixed
-     */
-    public function getProjects()
-    {
-        return $this->projects;
-    }
-    /**
-     * @param mixed $projects
-     */
-    public function setProjects($projects)
-    {
-        $this->projects = $projects;
-    }
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
     }
     /**
      * @return mixed

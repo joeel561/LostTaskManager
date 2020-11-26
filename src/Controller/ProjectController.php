@@ -76,8 +76,6 @@ class ProjectController extends AbstractController
             $project->setOwner($this->getUser());
             $project->setName($content['name']);
             $project->setDescription($content['description']);
-            $project->setAssignedUser($content['assignedUser']);
-            $project->setTasks([]);
             $project->setCreatedAt(new \DateTime());
             $project->setUpdatedAt(new \DateTime());
             $this->updateDatabase($project); 
