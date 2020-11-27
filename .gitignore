@@ -3,8 +3,11 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/.idea
+composer.lock
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
+symfony.lock
 /var/
 /vendor/
 /bin/console
