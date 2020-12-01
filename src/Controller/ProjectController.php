@@ -38,6 +38,7 @@ class ProjectController extends AbstractController
     {
         $this->entityManager = $entityManager;
         $this->projectRepository = $entityManager->getRepository('App:Project');
+
     }
 
     /**
@@ -46,6 +47,8 @@ class ProjectController extends AbstractController
     public function index()
     {
         $owner = $this->projectRepository->findOwner($this->getUser());
+        $users = $this->projectRepository->findUsers();
+       
         $jsonContent = $this->serializeObject($owner);
 
         return new Response($jsonContent, Response::HTTP_OK);
@@ -80,6 +83,20 @@ class ProjectController extends AbstractController
             $project->setDescription($content['description']);
             $project->setCreatedAt(new \DateTime());
             $project->setUpdatedAt(new \DateTime());
+            
+
+            $assignUserIds = [
+                1,
+                2,
+                3
+            ];
+
+            foreach($assignUserIds as $userId) {
+                $user = $this->userRepository->find($userId);
+                $project->assignUser($user);
+            }
+            
+            
             $this->updateDatabase($project); 
 
             $jsonContent = $this->serializeObject($project);

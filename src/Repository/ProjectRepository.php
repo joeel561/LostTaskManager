@@ -31,6 +31,17 @@ class ProjectRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findAssignedUsers($projectId)
+    {
+
+        $qb = $this->createQueryBuilder();
+        return $qb->select('project.assignedUsers')
+            ->where('project.id = :projectId')
+            ->setParameter(':projectId', $projectId)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */
