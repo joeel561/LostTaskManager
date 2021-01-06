@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
@@ -97,23 +99,6 @@ class Project
     {
         return $this->owner;
     }
-
-    /**
-     * @param mixed $assignedUsers
-     */
-    public function setAssignedUsers($users)
-    {
-        $this->assignedUsers = $users;
-    }
-
-    /**
-     * @param mixed $assignedUsers
-     */
-    public function getAssignedUsers()
-    {
-        return $this->assignedUsers;
-    }
-
     /**
      * @return mixed
      */
@@ -149,6 +134,37 @@ class Project
     }
 
     public function __construct() {
-        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->assignedUsers = new ArrayCollection();
     }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getAssignedUsers(): Collection
+    {
+       return $this->assignedUsers;
+    }
+
+
+    public function addAssignedUser(User $assignedUser): self 
+    {
+        if (!$this->assignedUsers->contains($assignedUser)) {
+            $this->assignedUsers[] = $assignedUser;
+            $assignedUser->addAssignedProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssignedUser(User $assignedUser): self 
+    {
+        if ($this->assignedUsers->contains($assignedUser)) {
+            $this->assignedUsers->removeElement($assignedUser);
+            $assignedUser->removeAssignedProject($this);
+        }
+
+        return $this;
+    }
+
+
 }

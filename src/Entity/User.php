@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Entity;
+    namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+    use Symfony\Component\Security\Core\User\UserInterface;
+    use Doctrine\Common\Collections\ArrayCollection;
+    use Doctrine\Common\Collections\Collection;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields="email", message="Email already taken")
- * @UniqueEntity(fields="username", message="Username already taken")
- * 
- */
-class User implements UserInterface, \Serializable
+    /**
+     * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+     * @UniqueEntity(fields="email", message="Email already taken")
+     * @UniqueEntity(fields="username", message="Username already taken")
+     * 
+     */
+    class User implements UserInterface, \Serializable
 
-{
+    {
 
     /**
      * @ORM\Id
@@ -37,11 +39,11 @@ class User implements UserInterface, \Serializable
 
     /**
 
-     * @ORM\Column(type="string", length=100, unique=true)
+        * @ORM\Column(type="string", length=100, unique=true)
 
-     * @Assert\NotBlank()
+        * @Assert\NotBlank()
 
-     */
+        */
 
     private $username;
 
@@ -49,11 +51,11 @@ class User implements UserInterface, \Serializable
 
     /**
 
-     * @Assert\NotBlank()
+        * @Assert\NotBlank()
 
-     * @Assert\Length(max="4096")
+        * @Assert\Length(max="4096")
 
-     */
+        */
 
     private $plainPassword;
 
@@ -61,17 +63,17 @@ class User implements UserInterface, \Serializable
 
     /**
 
-     * @ORM\Column(type="string", length=64)
+        * @ORM\Column(type="string", length=64)
 
-     */
+        */
 
     private $password;
 
-   /**
+    /**
 
-     * @ORM\Column(name="is_active", type="boolean")
+        * @ORM\Column(name="is_active", type="boolean")
 
-     */
+        */
 
     private $isActive;
 
@@ -86,28 +88,28 @@ class User implements UserInterface, \Serializable
      * @ORM\JoinTable(name="users_projects")
      */
 
-   private $assignedProjects;
+    private $assignedProjects;
 
-   public function __construct()
+    public function __construct()
 
-   {
+    {
 
-       $this->isActive = true;
-       $this->project = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
+        $this->assignedProjects = new ArrayCollection();
 
-   }
+    }
 
 
 
     /**
 
-     * Returns the username used to authenticate the user.
+        * Returns the username used to authenticate the user.
 
-     *
+        *
 
-     * @return string The username
+        * @return string The username
 
-     */
+    */
 
     public function getUsername()
 
@@ -120,9 +122,9 @@ class User implements UserInterface, \Serializable
 
     /**
 
-     * @param mixed $username
+        * @param mixed $username
 
-     */
+        */
 
     public function setUsername($username)
 
@@ -133,9 +135,9 @@ class User implements UserInterface, \Serializable
 
     /**
 
-     * @return mixed
+        * @return mixed
 
-     */
+        */
 
     public function getId()
 
@@ -146,9 +148,9 @@ class User implements UserInterface, \Serializable
 
     /**
 
-     * @return mixed $id
+        * @return mixed $id
 
-     */
+        */
 
     public function setId()
 
@@ -157,38 +159,48 @@ class User implements UserInterface, \Serializable
         $this->id = $id;
     }
 
-   /**
-    * @return mixed
-    */
-   public function getOwnedProjects()
-   {
-       return $this->ownedProjects;
-   }
-
-   /**
-    * @param mixed $ownedProjects
-    */
-   public function setOwnedProjects($ownedProject)
-   {
-       $this->ownedProjects = $ownedProjects;
-   }
-
     /**
     * @return mixed
     */
-    public function getAssignedProjects()
+    public function getOwnedProjects()
+    {
+        return $this->ownedProjects;
+    }
+
+    /**
+    * @param mixed $ownedProjects
+    */
+    public function setOwnedProjects($ownedProject)
+    {
+        $this->ownedProjects = $ownedProjects;
+    }
+
+    /**
+    * @return Collection|Project[]
+    */
+    public function getAssignedProjects(): Collection
     {
         return $this->assignedProjects;
     }
-  
-    /**
-     * @param mixed $assignedProjects
-     */
-    public function setAssignedProjects($assignedProject)
+
+    public function addAssignedProject(Project $assignedProject): self
     {
-        $this->assignedProjects = $assignedProjects;
+        if (!$this->assignedProjects->contains($assignedProject)) {
+            $this->assignedProjects[] = $assignedProject;
+
+        }
+
+        return $this;
     }
 
+    public function removeAssignedProject(Project $assignedProject): self 
+    {
+        if ($this->assignedProjects->contains($assignedProject)) {
+            $this->assignedProjects->removeElement($assignedProject);
+        }
+
+        return $this;
+    }
 
     public function setEmail($email)
 
@@ -196,6 +208,16 @@ class User implements UserInterface, \Serializable
 
         $this->email = $email;
     }
+
+    /**
+     * @return mixed
+     */
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
 
     /**
 

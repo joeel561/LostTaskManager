@@ -3,21 +3,18 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Project;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Validator\Constraints\DateTime;
 
-
-class ProjectController extends AbstractController
+class UserController extends AbstractController
 {
     /**
      * @var EntityManagerInterface
@@ -29,7 +26,8 @@ class ProjectController extends AbstractController
     /**
      * @var \Doctrine\Common\Persistence\ObjectRepository
      */
-    private $projectRepository;
+    private $userRepository;
+
     /**
      * ProjectController constructor.
      * @param EntityManagerInterface $entityManager
@@ -37,46 +35,18 @@ class ProjectController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->projectRepository = $entityManager->getRepository('App:Project');
+        $this->userRepository = $entityManager->getRepository('App:User');
     }
 
     /**
-     * @Route("/projects", name="project")
+     * @Route("/users", name="user")
      */
     public function index()
     {
-        $owner = $this->projectRepository->findOwner($this->getUser());
-        $jsonContent = $this->serializeObject($owner);
+        $user = $this->userRepository->findAll();
+        $jsonContent = $this->serializeObject($user);
 
         return new Response($jsonContent, Response::HTTP_OK);
-    }
-
-    /** 
-     * @param Request $request
-     * @return Response
-     * @Route("/projects/create", name="create_project")
-     */
-
-    public function saveProjects(Request $request)
-    {
-        $owner = $this->getUser();
-        $content = json_decode($request->getContent(), true);
-
-        if($content['name'] && $content['description']) {
-            $project = new Project();
-            $project->setOwner($this->getUser());
-            $project->setName($content['name']);
-            $project->setDescription($content['description']);
-            $project->setCreatedAt(new \DateTime());
-            $project->setUpdatedAt(new \DateTime());
-            $this->updateDatabase($project); 
-
-            $jsonContent = $this->serializeObject($project);
-
-            return new Response($jsonContent, Response::HTTP_OK);
-        }   
-
-        return new Response('Error', Response::HTTP_NOT_FOUND);
     }
 
     public function serializeObject($object)
@@ -93,11 +63,5 @@ class ProjectController extends AbstractController
         $jsonContent = $serializer->serialize($object, 'json');
 
         return $jsonContent;
-    }
-
-    public function updateDatabase($object)
-    {
-        $this->entityManager->persist($object);
-        $this->entityManager->flush();
     }
 }
