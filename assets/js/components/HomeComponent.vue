@@ -111,7 +111,7 @@
             ></b-form-input>
             <b-form-datalist
               id="input-list"
-              :options="options"
+              :options="users"
             ></b-form-datalist>
           </b-form-group>
           <b-form-group
@@ -139,7 +139,6 @@ export default {
   data: function () {
     return {
       projects: null,
-      newProjectName: "",
       newDate: "",
       newDescription: "",
       newProjectName: "",
@@ -147,15 +146,21 @@ export default {
       nameState: null,
       DateState: null,
       userState: null,
+      users: [],
+      user: {},
       descriptionState: null,
-      options: ["Test1", "Test3"],
-      modalShow: false
+      modalShow: false,
+      allUsers: null,
+      usernames: null,
     };
   },
 
   created() {
     axios.get("/projects").then((res) => {
       this.projects = res.data;
+    });
+    axios.get("/users").then((res) => {
+      this.users = res.data.map((user) => user.username);
     });
   },
 
@@ -194,6 +199,7 @@ export default {
           name: this.newProjectName,
           description: this.newDescription,
           date: this.newDate,
+          users: this.users
         })
         .then((res) => {
           this.projects.push(res.data);
