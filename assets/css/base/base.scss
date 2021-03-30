@@ -70,6 +70,13 @@ body {
     }
 }
 
+.btn {
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
 
 @include media-breakpoint-up(md) {
     .background {

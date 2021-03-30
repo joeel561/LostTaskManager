@@ -9,40 +9,26 @@
 
 
 {% block body %}
-
+    <div id="vueApp"></div>
 
    <div class="example-wrapper">
 
        <div class="jumbotron text-center">
 
-           <h2> Projects Time Tracker built with Symfony and Vue </h2>
-
-
+           <h2> Projects Time Tracker built with Symfony and Vue hi</h2>
 
            <div>
-
                {% if app.user %}
-
-
-
                    <a href="{{ path('home') }}" class="btn btn-default">Project</a>
-
-
-
                {% else %}
 
                    <a href="{{ path('login') }}" class="btn btn-default">Login</a>
 
                    <a href="{{ path('user_registration') }}" class="btn btn-default">Register</a>
-
-
-
                {% endif %}
 
            </div>
-
        </div>
-
    </div>
 
 {% endblock %}

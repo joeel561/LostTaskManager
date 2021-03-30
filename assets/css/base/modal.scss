@@ -20,7 +20,7 @@
             width: 30%;
         }
 
-        input {
+        .form-control {
             border: none;
             border-bottom: 1px solid #e2e2e2;
             border-radius: 0;
@@ -29,14 +29,17 @@
             height: 1.5rem;
         }
         
-        textarea {
+        #textarea {
             font-size: 0.8em;
             border: 1px solid #e2e2e2;
+            padding: 10px 10px;
         }
     }
 
     #date-picker__value_ {
         width: 80%;
+        border: none;
+        line-height: 2.5;
     }
 
     .bv-no-focus-ring {
@@ -60,6 +63,62 @@
             background:lighten($success-color, 15%);
         }
     }
+}
+
+.multiselect {
+    min-height: 28px;
+}
+
+.multiselect__select {
+    height: 28px;
+}
+
+.multiselect__tags {
+    border: none;
+    min-height: 28px;
+    border-bottom: 1px solid #e2e2e2;
+    border-radius: 0;
+    padding: 0;
+}
+
+.multiselect__tag {
+    margin-bottom: 0;
+    vertical-align: baseline;
+    background: $tag-color;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px;
+}
+
+.multiselect__input, .multiselect__single {
+    border: none;
+}
+
+.multiselect__tag-icon {
+    &:after {
+        color: #fff;
+    }
+
+    &:hover {
+        background:$tag-color-hover;
+    }
+}
+
+.multiselect__placeholder {
+    font-size: 0.8rem;
+    color: $text-color;
+    margin: 0;
+}
+
+.multiselect__option--highlight {
+    background: $tag-color;
+    &:after {
+        background: $tag-color;
+    }
+}
+
+.multiselect, .multiselect__input, .multiselect__single {
+    font-size: 0.8rem;
 }
 
 .modal-header {

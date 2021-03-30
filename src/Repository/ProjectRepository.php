@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Project;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @method Project|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,15 +22,24 @@ class ProjectRepository extends ServiceEntityRepository
 
     public function findOwner($owner)
     {
-        $qb = $this->createQueryBuilder('p');
-
-        return $qb->select('p')
-            ->andWhere('p.owner = :oid')
-            ->setParameter('oid', $owner)
-            ->getQuery()
-            ->getArrayResult();
-        ;
+        return $this->findBy(['owner' => $owner]);
     }
+
+    public function getProjectsAssigned($user)
+    {
+            $projects = $this->findAll();
+
+            $assignedProjects = [];
+
+            foreach($projects as $project) {
+                if($project->getAssignedUsers()->contains($user)) {
+                    $assignedProjects[] = $project;
+                }
+            }
+
+            return $assignedProjects;
+    }
+
 
     // /**
     //  * @return Project[] Returns an array of Project objects
