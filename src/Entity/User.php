@@ -178,7 +178,7 @@
     /**
     * @return Collection|Project[]
     */
-    public function getAssignedProjects(): Collection
+    public function getAssignedProjects(): ?Collection
     {
         return $this->assignedProjects;
     }

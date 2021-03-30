@@ -3,6 +3,7 @@
         <input :type="type" :id="id" class="form-control" :name="'_'+ id" value="" autocomplete="off" required />
         <label :for="id">{{ title }}</label>
     </div>
+
 </template>
 <script>
 export default {

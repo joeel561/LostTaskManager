@@ -8,6 +8,7 @@
     flex-direction: column;
     justify-content: flex-end;
     margin-bottom: 1em;
+    cursor: pointer;
 
     h3 {
         font-size: clamp(2em, 2.5vw, 2.6em);
@@ -38,6 +39,12 @@
 .projects-row {
     padding-left: 0;
     padding-right: 0;
+
+    a {
+        &:hover {
+            text-decoration: none;
+        }
+    }
     .col-2 {
         padding-left: 10px;
         padding-right: 10px;

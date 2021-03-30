@@ -20,28 +20,30 @@
               lg="2"
               v-for="project in projects"
               :key="project.id"
-            >
-              <div class="project-column">
-                <h3>{{ project.name | truncate(2, "") }}</h3>
-                <span>{{ project.name | truncate(20, "..") }}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-arrow-narrow-right"
-                  width="44"
-                  height="44"
-                  viewBox="0 0 24 24"
-                  stroke-width="1"
-                  stroke="#2c3e50"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <line x1="15" y1="16" x2="19" y2="12" />
-                  <line x1="15" y1="8" x2="19" y2="12" />
-                </svg>
-              </div>
+              >
+              <b-link v-bind:href="getUrl(project.id)">
+                <div class="project-column">
+                  <h3>{{ project.name | truncate(2, "") }}</h3>
+                  <span>{{ project.name | truncate(20, "..") }}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-arrow-narrow-right"
+                    width="44"
+                    height="44"
+                    viewBox="0 0 24 24"
+                    stroke-width="1"
+                    stroke="#2c3e50"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <line x1="15" y1="16" x2="19" y2="12" />
+                    <line x1="15" y1="8" x2="19" y2="12" />
+                  </svg>
+                </div>
+              </b-link>
             </b-col>
           </b-row>
         </b-container>
@@ -103,16 +105,7 @@
             label-for="user-input"
             invalid-feedback="User is required"
           >
-            <b-form-input
-              list="input-list"
-              id="input-with-list"
-              :state="userState"
-              v-model="newUser"
-            ></b-form-input>
-            <b-form-datalist
-              id="input-list"
-              :options="users"
-            ></b-form-datalist>
+            <multiselect v-model="newUser" :options="users" :multiple="true" :taggable="true" tag-position="bottom" label='username' track-by="username" @tag="addTag"></multiselect>
           </b-form-group>
           <b-form-group
             :state="descriptionState"
@@ -136,6 +129,7 @@
 
 <script>
 export default {
+  name:"Home",
   data: function () {
     return {
       projects: null,
@@ -160,11 +154,21 @@ export default {
       this.projects = res.data;
     });
     axios.get("/users").then((res) => {
-      this.users = res.data.map((user) => user.username);
+      this.users = res.data;
     });
   },
 
   methods: {
+    getUrl(id) {
+      return Routing.generate("project_detail", {id:id});  
+    },
+    addTag (newTag) {
+      const tag = {
+        username: newTag
+      }
+      this.users.push(tag)
+      this.newUser.push(tag)
+    },
     checkFormValidity() {
       const valid = this.$refs.form.checkValidity();
       this.nameState,
@@ -185,6 +189,8 @@ export default {
     },
     handleOk(bvModalEvt) {
       bvModalEvt.preventDefault();
+
+
       this.handleSubmit();
     },
     handleSubmit() {
@@ -199,7 +205,7 @@ export default {
           name: this.newProjectName,
           description: this.newDescription,
           date: this.newDate,
-          users: this.users
+          user: this.newUser
         })
         .then((res) => {
           this.projects.push(res.data);

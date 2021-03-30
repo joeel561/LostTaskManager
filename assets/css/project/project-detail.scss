@@ -1,0 +1,126 @@
+.detail-project-wrapper {
+    background: #fff;
+    border-radius: 17px;
+    padding: 30px 50px;
+    margin-top: 20px;
+
+    h2 {
+        font-size: 27px;
+        font-weight: 700;
+        color: $text-color;
+    }
+
+    p {
+        color: #999;
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    h5 {
+        font-size:16px;
+        margin-bottom: 0px;
+        font-weight: 600;
+        line-height: 24px;
+    }
+}
+
+.project-user-assigned {
+    span {
+        background: $tag-color;
+        color: #fff;
+        padding: 2px 10px;
+        border-radius: 15px;
+        font-size: 14px;
+    }
+}
+
+.project-information {
+    margin-bottom: 90px;
+}
+
+.project-task-wrapper, .project-inbox-wrapper {
+    h2 {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+.project-task-wrapper {
+    margin-bottom: 90px;
+
+    .form-control {
+        border: none;
+        padding: 0;
+        margin-bottom: 5px;
+        
+        &.is-valid {
+            background-image: none;
+            border-color: $border-color;
+            box-shadow: none;
+        }
+    }
+
+    .list-group-item {
+        padding: 15px 0px;
+        border: none;
+    }
+
+    .custom-select {
+        max-width: 22%;
+    }
+
+    .custom-control-label {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 25px;
+        align-items: center;
+
+        span, del{
+            color: $text-color-light;
+            padding-right: 20px;
+            word-break: break-word;
+            line-height: 24px;
+        }
+
+        &:before {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid $border-color;
+        }
+
+        &:after {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+    }
+
+    .custom-checkbox {
+        .custom-control-input:checked ~ .custom-control-label::after {
+            background-image: url('../../img/check.svg');
+            background-size: 21px;
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::before {
+            border-color: $success-color;
+            background: $success-color;
+        }
+
+        .custom-control-input:focus ~ .custom-control-label::before {
+            border-color: $success-light;
+            box-shadow:none;
+        }
+
+        .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+            box-shadow:0px 0px 0px 3px $success-dark;
+        }
+
+        .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+            background: $background-light-color;
+            border:$border-color;
+        }
+    }
+}

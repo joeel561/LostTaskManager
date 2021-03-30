@@ -1,78 +1,107 @@
 <template>
-    <!-- Create Task Modal -->
-    <b-modal id="taskCreate" title="Create Task" ok-title='Submit'>
-            <div class='module-box'>
-            <label> Title: </label>
-            <input
-                v-model="newTaskName"
-                type="text"
-                class="form-control"
-                id="username"
-                placeholder="What are you working on?"
-            />
-            </div>
-            <div class='module-box'>
-            <label for='date-picker'> Deadline: </label>
-            <b-form-datepicker id="date-picker" v-model="newTaskDeadline" size="sm" locale="en" :date-format-options="{ year: 'numeric', month: 'short', day: '2-digit', weekday: 'short' }" class="mb-2"></b-form-datepicker>
-            </div>
-            <div class='module-box'>
-            <label> User: </label>
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
-                <g>
-                <path fill="none" d="M0 0h22v22H0V0z"/>
-                <ellipse cx="8.25" cy="6.417" fill="none" stroke="rgb(79,79,79)" stroke-dasharray="0 0 0 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" rx="3.667" ry="3.667"/>
-                <path fill="none" stroke="rgb(79,79,79)" stroke-dasharray="0 0 0 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M2.75 19.25v-1.83333333C2.75 15.39162258 4.39162258 13.75 6.41666667 13.75h3.66666666C12.10837742 13.75 13.75 15.39162258 13.75 17.41666667V19.25"/>
-                <g>
-                    <path fill="none" stroke="rgb(79,79,79)" stroke-dasharray="0 0 0 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 10h4"/>
-                    <path fill="none" stroke="rgb(79,79,79)" stroke-dasharray="0 0 0 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M18 8v4"/>
-                </g>
-                </g>
-            </svg>
-
-            </div>
-            <div class='module-box'>
-            <label> Description: </label>
-                <b-form-textarea
-                id="textarea"
-                v-model="newTaskDescription"
-                placeholder="Enter something..."
-                rows="3"
-                max-rows="6"
-            ></b-form-textarea>
-            </div>
-        
-        <button
-        @click="createNewTask(selectedProject)"
-        class="btn btn-default btn-success"
-        >Save</button>
-    </b-modal>
+  <div class="col-md-12">
+    <div>
+      <div class="row">
+        <sidebar></sidebar>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <headline-component title="Project"></headline-component>
+          <div class='detail-project-wrapper'>
+              <div class='project-information' v-if='project !== null'>
+                  <h2>{{project.name}}</h2>
+                  <p> {{project.description}}</p>
+                  <div class='d-flex'>
+                    <h5 class='mr-3'>Project Member:</h5>
+                    <div class='project-user-assigned' v-for="user in project.assignedUsers" :key='user.username'>
+                      <span class='mr-2'>{{user.username}}</span>
+                    </div>
+                  </div>
+              </div>
+              <div class='project-task-wrapper'>
+                <h2>Tasks</h2>
+                <div class='task'>
+                  <b-form  @submit.stop.prevent>
+                  <b-form-input class="nes-input" placeholder="Add todo..." :state="validation" v-on:keyup.enter="createNewTask" v-model='newTaskName'> </b-form-input>
+                    <b-form-invalid-feedback :state="validation">
+                      Your task name is too long.
+                    </b-form-invalid-feedback>
+                  </b-form>
+                    <b-list-group>
+                      <b-list-group-item v-for="(task, index) in project.allLocatedTasks" :key="task.id">
+                        <b-form-checkbox class="nes-checkbox" v-model="task.done">
+                          <del v-if="task.done">{{ task.name }}</del>
+                          <span v-else>{{ task.name }}</span>
+                          <b-form-select v-model="selected" :options="options" class='ml-auto'></b-form-select>
+                          <b-button variant="link" v-on:click.prevent="removeTodo(task.id, index)">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1a1a1a" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <line x1="18" y1="6" x2="6" y2="18" />
+                              <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                          </b-button>
+                        </b-form-checkbox>
+                      </b-list-group-item>
+                  </b-list-group>
+                </div>
+              </div>
+              <div class='project-inbox-wrapper'>
+                <h2>Inbox</h2>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
+  name:"Project",
+  props: ['projectid'],
   data: function () {
     return {
-      newTaskName: "",
-      newTaskDeadline: '',
-      newTaskDescription: ''
+      newTaskName: '',
+      selected: null,
+      options: [
+        { value: null, text: 'Add tag'},
+        { value: 'waiting', text: 'Waiting'},
+        { value: 'in-progress', text: 'In progess'},
+        { value: 'approved', text: 'Approved'},
+
+      ],
+      project: null
     };
   },
 
   created() {
-    axios.get("/projects").then((res) => {
-      this.projects = res.data;
+    axios.get(`/projects/${this.projectid}`, {headers: {'X-Requested-With':'XMLHttpRequest'}}).then((res) => {
+      this.project = res.data;
     });
   },
 
+  computed: {
+    validation() {
+      return this.newTaskName.length <= 100
+    }
+  },
+
   methods: {
-    createNewTask(project) {
+    removeTodo(id, index) {
+    	axios.delete(`/projects/${this.project.id}/deleteTask`, {
+        data: {id: id}
+      })
+      this.$delete( this.project.allLocatedTasks,index);
+    },
+    createNewTask() {
       axios
-        .post(`/projects/${project.id}/tasks`, { name: this.newTaskName })
-        .then((res) => {
-
+        .post(`/projects/${this.project.id}/tasks`, { 
+          name: this.newTaskName 
+        })
+        .then(res => {
+          this.project.allLocatedTasks.push(res.data);
         });
-
-      this.newTaskName = "";
+        this.newTaskName = '';
     }
   },
 };
