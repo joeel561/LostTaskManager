@@ -106,6 +106,7 @@
             invalid-feedback="User is required"
           >
             <multiselect v-model="newUser" :options="users" :multiple="true" :taggable="true" tag-position="bottom" label='username' track-by="username" @tag="addTag"></multiselect>
+            <multiselect v-model="newUser2" :options="users2" :multiple="true" :taggable="true" tag-position="bottom" label='username' track-by="username" @tag="addTag"></multiselect>
           </b-form-group>
           <b-form-group
             :state="descriptionState"
