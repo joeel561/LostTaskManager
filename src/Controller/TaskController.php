@@ -76,6 +76,28 @@ class TaskController extends AbstractController
         return new Response(Response::HTTP_OK);
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/projects/{id}/editTag", name="edit_tag", methods={"PATCH"})
+     */
+    public function editTag(Request $request, int $id)
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $task = $this->taskRepository->find($content['taskId']);
+
+        if($task) {
+            $task->setTag($content['tag']);
+            $this->updateDatabase($task);
+            $jsonContent = $this->serializeObject($task);
+
+            return new Response($jsonContent, Response::HTTP_OK);
+        }
+
+        return new Response(Response::HTTP_OK);
+    }
+
     public function serializeObject($object)
     {
         $encoders = new JsonEncoder();

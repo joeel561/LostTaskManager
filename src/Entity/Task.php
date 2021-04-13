@@ -20,6 +20,10 @@ class Task
      */
     private $name;
     /**
+     * @ORM\Column(type="string", name="tag", length=100, nullable=true)
+     */
+    private $tag;
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="allLocatedTasks")
      */
     private $project;
@@ -51,6 +55,20 @@ class Task
     public function setName($name)
     {
         $this->name = $name;
+    }
+    /**
+     * @return mixed
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
+    /**
+     * @param mixed $tag
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
     }
     /**
      * @param mixed $project

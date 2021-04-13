@@ -32,7 +32,10 @@
                         <b-form-checkbox class="nes-checkbox" v-model="task.done">
                           <del v-if="task.done">{{ task.name }}</del>
                           <span v-else>{{ task.name }}</span>
-                          <b-form-select v-model="selected" :options="options" class='ml-auto'></b-form-select>
+                          <div>
+                            <multiselect v-model="newTaskTag[index]" :options="options" placeholder="Add Tag" label="name" track-by="name" v-on:select='editTag($event, task.id)'>
+                            </multiselect>
+                          </div> 
                           <b-button variant="link" v-on:click.prevent="removeTodo(task.id, index)">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1a1a1a" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -62,13 +65,11 @@ export default {
   data: function () {
     return {
       newTaskName: '',
-      selected: null,
+      newTaskTag:[],
       options: [
-        { value: null, text: 'Add tag'},
-        { value: 'waiting', text: 'Waiting'},
-        { value: 'in-progress', text: 'In progess'},
-        { value: 'approved', text: 'Approved'},
-
+        { name: 'Waiting'},
+        { name: 'In progess'},
+        { name:'Approved'},
       ],
       project: null
     };
@@ -78,6 +79,7 @@ export default {
     axios.get(`/projects/${this.projectid}`, {headers: {'X-Requested-With':'XMLHttpRequest'}}).then((res) => {
       this.project = res.data;
     });
+    
   },
 
   computed: {
@@ -96,12 +98,22 @@ export default {
     createNewTask() {
       axios
         .post(`/projects/${this.project.id}/tasks`, { 
-          name: this.newTaskName 
+          name: this.newTaskName,
         })
         .then(res => {
           this.project.allLocatedTasks.push(res.data);
         });
         this.newTaskName = '';
+    },
+    editTag(e, taskId) {
+      console.log('e', e);
+      console.log('taskId', taskId);
+
+      axios
+        .patch(`/projects/${this.project.id}/editTag`, { 
+          tag: e.name,
+          taskId: taskId
+        });
     }
   },
 };
