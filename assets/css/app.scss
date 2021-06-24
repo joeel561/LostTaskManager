@@ -1,7 +1,10 @@
 @import "variables/variables.scss";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import '../../node_modules/vue-multiselect/dist/vue-multiselect.min.css';
+@import '../../node_modules/vue2-editor/dist/vue2-editor.css';
 @import "base/base.scss";
 @import "project/project.scss";
 @import "login/login.scss";
 @import "base/sidebar.scss";
 @import "base/modal.scss";
+@import "notes/notes.scss";
