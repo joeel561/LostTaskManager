@@ -32,10 +32,10 @@ Vue.component('multiselect', Multiselect);
 Vue.component('headline-component', HeadlineComponent);
 Vue.component('sidebar', Sidebar);
 
+
 const router = new VueRouter({
    routes 
 })
-
 
 const filter = function(text, length, clamp) {
    clamp = clamp || ''; 
@@ -44,6 +44,7 @@ const filter = function(text, length, clamp) {
    const content = node.textContent;
    return content.length > length ? content.slice(0, length) + clamp : content;
 };
+
 Vue.filter('truncate', filter);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);

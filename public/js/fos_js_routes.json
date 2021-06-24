@@ -1,0 +1,1 @@
+{"base_url":"","routes":{"project_detail":{"tokens":[["variable","\/","[^\/]++","id",true],["text","\/projects/list"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":[],"schemes":[]}},"prefix":"","host":"localhost","port":"","scheme":"http","locale":[]}

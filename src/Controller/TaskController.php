@@ -37,6 +37,8 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @return Response
      * @Route("/projects/{id}/tasks", name="task")
      */
     public function createTask(Request $request,int $id)
@@ -45,16 +47,55 @@ class TaskController extends AbstractController
 
         $project = $this->projectRepository->find($id);
 
-        $task = new Task();
-        $task->setName($content['name']);
-        $task->setName($content['description']);
-        $task->setUser($this->getUser());
-        $task->setProject($project);
-        $this->updateDatabase($task);
+        if($content['name']) {
+            $task = new Task();
+            $task->setName($content['name']);
+            $task->setProject($project);
+            $this->updateDatabase($task);
+            $jsonContent = $this->serializeObject($task);
 
-        $jsonContent = $this->serializeObject($task);
+            return new Response($jsonContent, Response::HTTP_OK);
+        }
+    }
 
-        return new Response($jsonContent, Response::HTTP_OK);
+        /**
+     * @param Request $request
+     * @return Response
+     * @Route("/projects/{id}/deleteTask", name="delete_task", methods={"DELETE"})
+     */
+    public function deleteTask(Request $request, int $id)
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $task = $this->taskRepository->find($content['id']);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($task);
+        $entityManager->flush();
+
+        return new Response(Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/projects/{id}/editTag", name="edit_tag", methods={"PATCH"})
+     */
+    public function editTag(Request $request, int $id)
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $task = $this->taskRepository->find($content['taskId']);
+
+        if($task) {
+            $task->setTag($content['tag']);
+            $this->updateDatabase($task);
+            $jsonContent = $this->serializeObject($task);
+
+            return new Response($jsonContent, Response::HTTP_OK);
+        }
+
+        return new Response(Response::HTTP_OK);
     }
 
     public function serializeObject($object)

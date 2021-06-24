@@ -4,8 +4,8 @@
 
 <head>
 
-   <meta charset="UTF-8">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
    <title>{% block title %} Lost Task Manager{% endblock %}</title>
 
    {% block stylesheets %}
@@ -136,7 +136,9 @@
         </div>
 
         {% block javascripts %}
-        <script src="{{ asset('build/js/app.js') }}"></script>
+            <script src="{{ asset('build/js/app.js') }}"></script>
+            <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
         {% endblock %}
     </body>
 </html>

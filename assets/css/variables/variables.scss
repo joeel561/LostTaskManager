@@ -1,4 +1,5 @@
 $background-color: #141E30;
+$background-dark-color: #101826;
 $text-color: #1a1a1a;
 $primary:#F36;
 $btn-secondary: #283955;
@@ -6,6 +7,16 @@ $white:#fff;
 $dark: #283955;
 $nav-active: #1A263B;
 $success-color: #69BD74;
+$success-light:#ccffb3;
+$success-dark: #69bd7452;
+$tag-color: #4c6590;
+$tag-color-hover: #334461;
+$notes-list-item:#162032;
+$notes-list-item-text:#7B7D80;
+$border-color: #B6BBC8;
+$background-light-color:#f7f7f7;
+$text-color-light: #828282;
+
 // Include Bootstrap and BootstrapVue SCSS files
 @import 'node_modules/bootstrap-scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
