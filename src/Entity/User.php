@@ -90,6 +90,11 @@
 
     private $assignedProjects;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notes", mappedBy="user")
+    */
+    private $notesList;
+
     public function __construct()
 
     {
@@ -102,7 +107,6 @@
 
 
     /**
-
         * Returns the username used to authenticate the user.
 
         *
@@ -173,6 +177,22 @@
     public function setOwnedProjects($ownedProject)
     {
         $this->ownedProjects = $ownedProjects;
+    }
+
+    /**
+    * @return mixed
+    */
+    public function getNotesList()
+    {
+        return $this->ownedProjects;
+    }
+
+    /**
+    * @param mixed $notesList
+    */
+    public function setNotesList($notesList)
+    {
+        $this->notesList = $notesList;
     }
 
     /**
