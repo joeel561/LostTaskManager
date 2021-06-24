@@ -9,6 +9,10 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.app-view {
+    height: 100%;
+}
+
 .container {
     height: 100%;
     padding-top: 2.5em;
@@ -30,8 +34,7 @@ body {
     left: 0;
     z-index: -1;
     width:100%;
-    height: 100vh;
-
+    
     .bg-number-wrapper {
         position: absolute;
         bottom: 3em;
@@ -72,17 +75,32 @@ body {
 
 .btn {
     svg {
-        width: 18px;
-        height: 18px;
+        width: 1.125rem;
+        height: 1.125rem;
     }
 }
 
+
+.information-panel {
+    background: #fff;
+    border-radius: 1.0625rem;
+    padding: 1.25rem 0rem;
+    margin-top: 1.25rem;
+
+}
 
 @include media-breakpoint-up(md) {
     .background {
         .bg-waves-wrapper {
             width: 820px;
         }
+    }
+
+    .information-panel {
+        background: #fff;
+        border-radius: 1.0625rem;
+        padding: 1.875rem 3.125rem;
+        margin-top: 1.25rem;
     }
 }
 
