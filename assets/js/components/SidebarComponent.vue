@@ -12,12 +12,13 @@
       <template #default="{ hide }">
         <div class="p-3">
           <nav class="mb-3">
+              <router-link to="/home">Go to Foo</router-link>
+              <router-view></router-view>
             <b-nav vertical>
-              <b-nav-item @click="hide"><b-icon-grid></b-icon-grid> Dashboard</b-nav-item>
-              <b-nav-item href="#link-1" @click="hide" active><b-icon-folder></b-icon-folder> Projects</b-nav-item>
-              <b-nav-item href="#link-2" @click="hide"><b-icon-chat-dots></b-icon-chat-dots> Chat</b-nav-item>
-              <b-nav-item href="#link-2" @click="hide"><b-icon-file-earmark-check></b-icon-file-earmark-check> Approvo</b-nav-item>
-              <b-nav-item href="#link-2" @click="hide"><b-icon-file-text></b-icon-file-text> Notes</b-nav-item>
+              <b-nav-item href="/home" @click="hide"><b-icon-grid></b-icon-grid> Dashboard</b-nav-item>
+              <b-nav-item href="/projects" @click="hide"><b-icon-folder></b-icon-folder> Projects</b-nav-item>
+              <b-nav-item href="/chat" @click="hide"><b-icon-chat-dots></b-icon-chat-dots> Chat</b-nav-item>
+              <b-nav-item href="/notes" @click="hide"><b-icon-file-text></b-icon-file-text> Notes</b-nav-item>
             </b-nav>
           </nav>
         </div>

@@ -1,0 +1,51 @@
+.notes--icons {
+    .btn {
+        padding: .3125rem;
+        svg {
+            stroke: #fff;
+            width: 1.6875rem;
+            height: 1.6875rem;
+            opacity: 0.5;
+        }
+    }
+}
+
+.notes-list--panel {
+    background: $background-dark-color;
+    padding: 1.25rem 0rem;
+    margin-right: 1.875rem;
+    border-radius: 1.25rem;
+    margin-top: 1.25rem;
+
+    .notes-list-item {
+        border-bottom: .0625rem solid $background-color;
+        color: #fff;
+        padding: .9375rem .9375rem;
+        transition: all ease-out .3s;
+        cursor: pointer;
+
+        &:hover {
+            background: $notes-list-item;
+            transition: all ease-in .3s;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: .875rem;
+        }
+
+        p {
+            font-size: .75rem;
+            color: $notes-list-item-text;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.notes-list--headline {
+    padding: 0 .9375rem;
+    margin-bottom: 1.25rem;
+}
