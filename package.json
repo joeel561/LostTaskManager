@@ -3,7 +3,6 @@
         "@symfony/webpack-encore": "^0.33.0",
         "bootstrap": "^4.5.3",
         "core-js": "^3.0.0",
-        "node-sass": "^4.14.1",
         "regenerator-runtime": "^0.13.2",
         "sass-loader": "^10.0.2",
         "vue": "^2.6.12",
@@ -23,10 +22,13 @@
         "axios": "^0.21.1",
         "bootstrap-scss": "4.5.2",
         "bootstrap-vue": "^2.18.1",
+        "debounce": "^1.2.1",
         "moment": "^2.27.0",
+        "node-sass": "^4.14.1",
         "symfony-ts-router": "^1.0.6",
         "vue-multiselect": "^2.1.6",
         "vue-router": "^3.5.1",
+        "vue2-editor": "^2.10.2",
         "vuetify": "^2.4.3"
     }
 }

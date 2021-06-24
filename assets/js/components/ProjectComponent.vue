@@ -7,8 +7,8 @@
       <div class="row">
         <div class="col-md-12">
           <headline-component title="Project"></headline-component>
-          <div class='detail-project-wrapper'>
-              <div class='project-information' v-if='project !== null'>
+          <div class='detail-project-wrapper information-panel'>
+              <div class='project-information pl-4 pr-4 pl-md-0 pr-md-0' v-if='project !== null'>
                   <h2>{{project.name}}</h2>
                   <p> {{project.description}}</p>
                   <div class='d-flex'>
@@ -19,10 +19,10 @@
                   </div>
               </div>
               <div class='project-task-wrapper'>
-                <h2>Tasks</h2>
+                <h2 class='pl-4 pr-4 pl-md-0 pr-md-0'>Tasks</h2>
                 <div class='task'>
                   <b-form  @submit.stop.prevent>
-                  <b-form-input class="nes-input" placeholder="Add todo..." :state="validation" v-on:keyup.enter="createNewTask" v-model='newTaskName'> </b-form-input>
+                  <b-form-input class="nes-input  pl-4 pr-4 pl-md-0 pr-md-0" placeholder="Add todo..." :state="validation" v-on:keyup.enter="createNewTask" v-model='newTaskName'> </b-form-input>
                     <b-form-invalid-feedback :state="validation">
                       Your task name is too long.
                     </b-form-invalid-feedback>
@@ -32,9 +32,9 @@
                         <b-form-checkbox class="nes-checkbox" v-model="task.done">
                           <del v-if="task.done">{{ task.name }}</del>
                           <span v-else>{{ task.name }}</span>
-                          <div>
-                            <multiselect v-model="newTaskTag[index]" :options="options" placeholder="Add Tag" label="name" track-by="name" v-on:select='editTag($event, task.id)'>
-                            </multiselect>
+                          <div class='select-tag--box' v-bind:class='task.tag'>
+                            <b-form-select v-model="newTaskTag[index]" :options="options" value-field='text' text-field="text" v-on:change='editTag($event, task.id, index)'></b-form-select>
+                            <div class='selected-tag'>{{task.tag }}</div>
                           </div> 
                           <b-button variant="link" v-on:click.prevent="removeTodo(task.id, index)">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1a1a1a" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -48,7 +48,7 @@
                   </b-list-group>
                 </div>
               </div>
-              <div class='project-inbox-wrapper'>
+              <div class='project-inbox-wrapper pl-4 pr-4 pl-md-0 pr-md-0'>
                 <h2>Inbox</h2>
               </div>
           </div>
@@ -67,11 +67,11 @@ export default {
       newTaskName: '',
       newTaskTag:[],
       options: [
-        { name: 'Waiting'},
-        { name: 'In progess'},
-        { name:'Approved'},
+        { text: 'Waiting'},
+        { text: 'In progress'},
+        { text: 'Approved'},
       ],
-      project: null
+      project: null,
     };
   },
 
@@ -93,7 +93,7 @@ export default {
     	axios.delete(`/projects/${this.project.id}/deleteTask`, {
         data: {id: id}
       })
-      this.$delete( this.project.allLocatedTasks,index);
+      this.$delete(this.project.allLocatedTasks,index);
     },
     createNewTask() {
       axios
@@ -105,13 +105,13 @@ export default {
         });
         this.newTaskName = '';
     },
-    editTag(e, taskId) {
-      console.log('e', e);
-      console.log('taskId', taskId);
-
+    editTag(e, taskId, index) {
+      
+      this.$set(this.project.allLocatedTasks, index, Object.assign({},
+      this.project.allLocatedTasks[index], {tag : e}))
       axios
         .patch(`/projects/${this.project.id}/editTag`, { 
-          tag: e.name,
+          tag: e,
           taskId: taskId
         });
     }

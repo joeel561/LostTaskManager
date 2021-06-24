@@ -43,13 +43,22 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/projects", name="project")
+     * @Route("/projects", name="projectss")
      */
-    public function index()
+    public function index(): Response
+    {
+        return $this->render('project/index.html.twig');
+    }
+
+    /**
+     * @Route("/projects/list", name="projects_list")
+     */
+    public function allProjects(): Response
     {
         $myProjects = $this->projectRepository->findOwner($this->getUser());
         
         $projectsAssigned = $this->projectRepository->getProjectsAssigned($this->getUser());
+        
 
         $projects = array_merge($myProjects, $projectsAssigned);
         $projects = array_map("unserialize", array_unique(array_map("serialize", $projects)));
