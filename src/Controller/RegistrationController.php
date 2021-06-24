@@ -32,25 +32,23 @@ class RegistrationController extends AbstractController
      */
     public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $content = json_decode($request->getContent(), true);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-
-            $user->setPassword($password);
-
+        if($content['email']) {
+            $user = new User();
+            $password = $content['password'];
+            
+            $user->setUsername($content['username']);
+            $user->setEmail($content['email']);
+            $user->setPassword($passwordEncoder->encodePassword($user, $password));
             $this->updateDatabase($user);
 
-            return $this->redirectToRoute('home');
+            return $this->json([
+                'user' => $user->getEmail()
+            ]);
         }
 
-        return $this->render('registration/register.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return new Response('Error', Response::HTTP_NOT_FOUND);
     }
 
     function updateDatabase($object) 
