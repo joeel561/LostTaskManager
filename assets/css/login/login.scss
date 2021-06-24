@@ -122,6 +122,37 @@ body {
         }
     }
 
+    .show-hide--btn {
+        background: transparent;
+        border: none;
+        position: absolute;
+        padding-right: 0;
+        right: 0;
+        top: .4375rem;
+
+        .icon-tabler-eye {
+            display: block;
+        }
+
+        .icon-tabler-eye-off {
+            display: none;
+        }
+
+        &.active {
+            .icon-tabler-eye {
+                display:none;
+            }
+            .icon-tabler-eye-off {
+                display: block;
+            }
+        }
+
+        svg {
+            width: 1.875rem;
+            height: 1.875rem;
+        }
+    }
+
     .btn-wrapper {
         margin-top: auto;
         color: #1a1a1a;

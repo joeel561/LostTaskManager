@@ -5,3 +5,8 @@ logout:
   path: /logout
 #
 #
+index:
+    path: /{wildcard}
+    controller: App\Controller\DefaultController::index
+    requirements:
+        wildcard: .*
