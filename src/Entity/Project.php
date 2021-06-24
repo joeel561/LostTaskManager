@@ -41,9 +41,15 @@ class Project
      */
     private $createdAt;
     /**
-     * @ORM\Column(type="datetime", name="updated_at")
+     * @ORM\Column(type="datetime", name="date")
      */
-    private $updatedAt;
+    private $date;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="project")
+    */
+    private $allLocatedTasks;
+
     /**
      * @return mixed
      */
@@ -116,16 +122,16 @@ class Project
     /**
      * @return mixed
      */
-    public function getUpdatedAt()
+    public function getDate()
     {
-        return $this->updatedAt;
+        return $this->date;
     }
     /**
-     * @param mixed $updatedAt
+     * @param mixed $date
      */
-    public function setUpdatedAt($updatedAt)
+    public function setDate($date)
     {
-        $this->updatedAt = $updatedAt;
+        $this->date = $date;
     }
     public function __toString()
     {
@@ -140,7 +146,7 @@ class Project
     /**
      * @return Collection|User[]
      */
-    public function getAssignedUsers(): Collection
+    public function getAssignedUsers(): ?Collection
     {
        return $this->assignedUsers;
     }
@@ -164,6 +170,22 @@ class Project
         }
 
         return $this;
+    }
+
+    /**
+    * @return mixed
+    */
+    public function getAllLocatedTasks()
+    {
+        return $this->allLocatedTasks;
+    }
+
+    /**
+    * @param mixed $allLocatedTasks
+    */
+    public function setAllLocatedTasks($allLocatedTasks)
+    {
+        $this->allLocatedTasks = $allLocatedTasks;
     }
 
 

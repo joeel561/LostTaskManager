@@ -20,14 +20,14 @@ class Task
      */
     private $name;
     /**
-     * @ORM\Column(type="string", name="description", length=200)
+     * @ORM\Column(type="string", name="tag", length=100, nullable=true)
      */
-    private $description;
-
+    private $tag;
     /**
-     * @ORM\Column(type="datetime", name="started_at")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="allLocatedTasks")
      */
-    private $startedAt;
+    private $project;
+
     /**
      * @return mixed
      */
@@ -56,29 +56,33 @@ class Task
     {
         $this->name = $name;
     }
-    public function getDescription()
-    {
-        return $this->description;
-    }
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
     /**
      * @return mixed
      */
-    public function getStartedAt()
+    public function getTag()
     {
-        return $this->startedAt;
+        return $this->tag;
     }
     /**
-     * @param mixed $startedAt
+     * @param mixed $tag
      */
-    public function setStartedAt($startedAt)
+    public function setTag($tag)
     {
-        $this->startedAt = $startedAt;
+        $this->tag = $tag;
+    }
+    /**
+     * @param mixed $project
+     */
+    public function setProject(Project $newProject)
+    {
+        $this->project = $newProject;
+    }
+
+    /**
+     * @param mixed
+     */
+    public function getProject()
+    {
+        return $this->project;
     }
 }

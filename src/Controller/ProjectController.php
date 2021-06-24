@@ -20,7 +20,8 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class ProjectController extends AbstractController
 {
     /**
-     * @var EntityManagerInterface
+     * @var EntityManagerInterface  
+     * 
      * 
      * 
      * 
@@ -38,15 +39,31 @@ class ProjectController extends AbstractController
     {
         $this->entityManager = $entityManager;
         $this->projectRepository = $entityManager->getRepository('App:Project');
+        $this->userRepository = $entityManager->getRepository('App:User');
     }
 
     /**
-     * @Route("/projects", name="project")
+     * @Route("/projects", name="projectss")
      */
-    public function index()
+    public function index(): Response
     {
-        $owner = $this->projectRepository->findOwner($this->getUser());
-        $jsonContent = $this->serializeObject($owner);
+        return $this->render('project/index.html.twig');
+    }
+
+    /**
+     * @Route("/projects/list", name="projects_list")
+     */
+    public function allProjects(): Response
+    {
+        $myProjects = $this->projectRepository->findOwner($this->getUser());
+        
+        $projectsAssigned = $this->projectRepository->getProjectsAssigned($this->getUser());
+        
+
+        $projects = array_merge($myProjects, $projectsAssigned);
+        $projects = array_map("unserialize", array_unique(array_map("serialize", $projects)));
+        sort($projects);
+        $jsonContent = $this->serializeObject($projects);
 
         return new Response($jsonContent, Response::HTTP_OK);
     }
@@ -66,9 +83,24 @@ class ProjectController extends AbstractController
             $project = new Project();
             $project->setOwner($this->getUser());
             $project->setName($content['name']);
+            $project->setDate(new \DateTime($content['date']));
             $project->setDescription($content['description']);
             $project->setCreatedAt(new \DateTime());
-            $project->setUpdatedAt(new \DateTime());
+
+            foreach ($content['user'] as $user) {
+                if (empty($user['id'])) {
+                    continue;
+                }
+
+                $userEntity = $this->userRepository->find($user['id']);
+
+                if (empty($userEntity)) {
+                    continue;
+                }
+
+                $project->addAssignedUser($userEntity);
+            }
+
             $this->updateDatabase($project); 
 
             $jsonContent = $this->serializeObject($project);
@@ -78,6 +110,23 @@ class ProjectController extends AbstractController
 
         return new Response('Error', Response::HTTP_NOT_FOUND);
     }
+
+    /**
+     * @Route("/projects/{id}", options={"expose"=true}, name="project_detail")
+    */
+    public function show(Request $request, Project $project)
+    {
+        if ($request->isXmlHttpRequest()) {
+            return new Response($this->serializeObject($project), Response::HTTP_OK);
+        }
+
+        
+        return $this->render('project/detail.html.twig', [
+            'projectId' => $project->getId(),
+        ]);
+    }
+
+
 
     public function serializeObject($object)
     { 

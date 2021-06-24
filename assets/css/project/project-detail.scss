@@ -1,0 +1,363 @@
+.detail-project-wrapper {
+    h2 {
+        font-size: 27px;
+        font-weight: 700;
+        color: $text-color;
+    }
+
+    p {
+        color: #999;
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    h5 {
+        font-size:16px;
+        margin-bottom: 0px;
+        font-weight: 600;
+        line-height: 24px;
+    }
+}
+
+.project-user-assigned {
+    span {
+        background: $tag-color;
+        color: #fff;
+        padding: 2px 10px;
+        border-radius: 15px;
+        font-size: 14px;
+    }
+}
+
+.project-information {
+    margin-bottom: 90px;
+}
+
+.project-task-wrapper, .project-inbox-wrapper {
+    h2 {
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+.project-task-wrapper {
+    margin-bottom: 90px;
+
+    .form-control {
+        border: none;
+        padding: 0;
+        margin-bottom: 5px;
+        
+        &.is-valid {
+            background-image: none;
+            border-color: $border-color;
+            box-shadow: none;
+        }
+    }
+
+    .list-group-item {
+        padding: 10px 20px;
+        background: #f7f7f7;
+        border: none;
+        margin-bottom: 5px;
+    }
+
+    .custom-select {
+        max-width: 22%;
+        height: 30px;
+        width: auto;
+    }
+
+    .custom-control {
+        padding-left: 0;
+    }
+
+    .custom-control-label {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: flex-start;
+        flex-wrap: wrap;
+
+        span, del{
+            color: $text-color-light;
+            word-break: break-word;
+            line-height: 24px;
+            width:95%;
+        }
+
+        .btn {
+            padding: 0;
+            width: 5%;
+        }
+
+        &:before {
+            content:none;
+        }
+
+        &:after {
+            content:none;
+        }
+    }
+
+    .select-tag--box {
+        display: flex;
+        align-content: center;
+        position: relative;
+        border-radius: 1.875rem;
+        background: rgba(128,128,128,0.41);
+        z-index: 10;
+        color: #4F4F4F;
+        order: 2;
+        padding: 0 15px;
+        margin-top: 5px;
+
+        &.Approved {
+            background: rgba(105,189,116,0.41);
+            color: #69BD74;
+        }
+
+        &.progress {
+            background: rgba(105,164,189,0.41);
+            height: auto;
+            color: #6E9DB0;
+        }
+
+        select {
+            padding: 0;
+            width: auto;
+            opacity: 0;
+            height: 1.875rem;
+            max-width: none;
+            z-index: 10;
+        }
+
+        .selected-tag {
+            display: inline-block;
+            position: absolute;
+            z-index: -1;
+            line-height: 1.875rem;
+            font-size: .875rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+    }
+
+    .custom-checkbox {
+        .custom-control-input:checked ~ .custom-control-label::after {
+            background-image: url('../../img/check.svg');
+            background-size: 21px;
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::before {
+            border-color: $success-color;
+            background: $success-color;
+        }
+
+        .custom-control-input:focus ~ .custom-control-label::before {
+            border-color: $success-light;
+            box-shadow:none;
+        }
+
+        .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+            box-shadow:0px 0px 0px 3px $success-dark;
+        }
+
+        .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+            background: $background-light-color;
+            border:$border-color;
+        }
+    }
+}
+
+
+
+
+@include media-breakpoint-up(md) { 
+    .detail-project-wrapper {
+        background: #fff;
+        border-radius: 17px;
+        padding: 30px 50px;
+        margin-top: 20px;
+    
+        h2 {
+            font-size: 27px;
+            font-weight: 700;
+            color: $text-color;
+        }
+    
+        p {
+            color: #999;
+            font-size: 14px;
+            line-height: 22px;
+        }
+    
+        h5 {
+            font-size:16px;
+            margin-bottom: 0px;
+            font-weight: 600;
+            line-height: 24px;
+        }
+    }
+    
+    .project-user-assigned {
+        span {
+            background: $tag-color;
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+    }
+    
+    .project-information {
+        margin-bottom: 90px;
+    }
+    
+    .project-task-wrapper, .project-inbox-wrapper {
+        h2 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+    }
+    
+    .project-task-wrapper {
+        margin-bottom: 90px;
+    
+        .form-control {
+            border: none;
+            padding: 0;
+            margin-bottom: 5px;
+            
+            &.is-valid {
+                background-image: none;
+                border-color: $border-color;
+                box-shadow: none;
+            }
+        }
+    
+        .list-group-item {
+            padding: 15px 0px;
+            background: transparent;
+            border: none;
+        }
+    
+        .custom-select {
+            max-width: 22%;
+        }
+    
+        .custom-control-label {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding-left: 45px;
+            align-items: center;
+            background: transparent;
+            flex-wrap: nowrap;
+    
+            span, del{
+                color: $text-color-light;
+                padding-right: 20px;
+                word-break: break-word;
+                line-height: 24px;
+                width: 80%;
+            }
+    
+            &:before {
+                content: '';
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                left: 0;
+                top: 5px;
+                border: 1px solid $border-color;
+            }
+    
+            &:after {
+                content: '';
+                left: 0;
+                top: 5px;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+            }
+        }
+    
+        .select-tag--box {
+            margin-top: 0;
+            display: flex;
+            align-content: center;
+            position: relative;
+            border-radius: 1.875rem;
+            background: rgba(128,128,128,0.41);
+            z-index: 10;
+            color: #4F4F4F;
+            order: 0;
+    
+            &.Approved {
+                background: rgba(105,189,116,0.41);
+                color: #69BD74;
+            }
+    
+            &.progress {
+                background: rgba(105,164,189,0.41);
+                height: auto;
+                color: #6E9DB0;
+            }
+    
+            select {
+                padding: 0;
+                width: 7.5rem;
+                opacity: 0;
+                height: 2.5rem;
+                max-width: none;
+                z-index: 10;
+            }
+    
+            .selected-tag {
+                display: inline-block;
+                position: absolute;
+                z-index: -1;
+                line-height: 2.5rem;
+                font-size: .875rem;
+                text-transform: uppercase;
+                font-weight: 600;
+                left: 0;
+                right: 0;
+                text-align: center;
+            }
+        }
+    
+        .custom-checkbox {
+            .custom-control-input:checked ~ .custom-control-label::after {
+                background-image: url('../../img/check.svg');
+                background-size: 21px;
+            }
+    
+            .custom-control-input:checked ~ .custom-control-label::before {
+                border-color: $success-color;
+                background: $success-color;
+            }
+    
+            .custom-control-input:focus ~ .custom-control-label::before {
+                border-color: $success-light;
+                box-shadow:none;
+            }
+    
+            .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+                box-shadow:0px 0px 0px 3px $success-dark;
+            }
+    
+            .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+                background: $background-light-color;
+                border:$border-color;
+            }
+        }
+    }
+
+}

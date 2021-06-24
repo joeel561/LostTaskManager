@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProjectController!{% endblock %}
+{% block title %}Project{% endblock %}
 
 {% block body %}
 {{ parent() }}
     <div class="container">
         <div class="row">
+            <project projectId="{{ projectId }}"></project>
         </div>
     </div>
 {% endblock %}
