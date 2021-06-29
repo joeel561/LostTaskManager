@@ -1,4 +1,4 @@
-<template>
+ <template>
    <div class="col-sm-12 login-wrapper">
        <div class="auth-form">
             <div class='auth-form-wrapper'>
@@ -87,6 +87,15 @@ export default {
             this.form.passwordFieldType = this.form.passwordFieldType === "password" ? "text" : "password";
         },
          async onSubmit() {
+             axios.post("/register", {
+                    username: this.form.username,
+                    email: this.form.email,
+                    password: this.form.password
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
             let res = await axios
                 .post("/register", {
                     username: this.form.username,
@@ -95,6 +104,7 @@ export default {
                 });
 
                 let data = res.data;
+                console.log(data);
             }
         }
 }

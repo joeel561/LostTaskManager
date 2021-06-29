@@ -688,6 +688,18 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
+"@babel/plugin-transform-runtime@^7.14.5":
+  "integrity" "sha512-fPMBhh1AV8ZyneiCIA+wYYUH1arzlXR1UMcApjvchDhfKxhy2r2lReJv8uHEyihi4IFIGlr1Pdx7S5fkESDQsg=="
+  "resolved" "https://registry.npmjs.org/@babel/plugin-transform-runtime/-/plugin-transform-runtime-7.14.5.tgz"
+  "version" "7.14.5"
+  dependencies:
+    "@babel/helper-module-imports" "^7.14.5"
+    "@babel/helper-plugin-utils" "^7.14.5"
+    "babel-plugin-polyfill-corejs2" "^0.2.2"
+    "babel-plugin-polyfill-corejs3" "^0.2.2"
+    "babel-plugin-polyfill-regenerator" "^0.2.2"
+    "semver" "^6.3.0"
+
 "@babel/plugin-transform-shorthand-properties@^7.14.5":
   "integrity" "sha512-xLucks6T1VmGsTB+GWK5Pl9Jl5+nRXD1uoFdA5TSO6xtiNjtXTjKkmPdFXVLGlK5A2/or/wQMKfmQ2Y0XJfn5g=="
   "resolved" "https://registry.npmjs.org/@babel/plugin-transform-shorthand-properties/-/plugin-transform-shorthand-properties-7.14.5.tgz"
@@ -829,7 +841,7 @@
     "@babel/types" "^7.4.4"
     "esutils" "^2.0.2"
 
-"@babel/runtime@^7.8.4":
+"@babel/runtime@^7.14.6", "@babel/runtime@^7.8.4":
   "integrity" "sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg=="
   "resolved" "https://registry.npmjs.org/@babel/runtime/-/runtime-7.14.6.tgz"
   "version" "7.14.6"
