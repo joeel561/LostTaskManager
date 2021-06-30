@@ -3,7 +3,38 @@
 {% block title %}Login {% endblock %}
 
 {% block body %}
-    {{ parent() }}
+{{ parent() }}
+   <div class="col-sm-12 login-wrapper">
+       <div class="auth-form">
+            <div class='auth-form-wrapper'>
+                <h2 class="text-center">Login</h2>
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong> {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+                <form action="{{ path('login') }}" method="post">
+                    <login type='text' title='Username' id='username'></login>    
 
+                    <login type='password' title='Password' id='password'></login>                    
 
+                    <div class="form-group submit-btn">
+                        <button type="submit" class="btn btn-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" viewBox="0 0 24 24" stroke-width="1" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path transform="scale(-1,1) translate(-24,0)" stroke="none" d="M0 0h24v24H0z"/>
+                                <path transform="scale(-1,1) translate(-24,0)" d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                <path transform="scale(-1,1) translate(-24,0)" d="M20 12h-13l3 -3m0 6l-3 -3" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center form-group btn-wrapper">
+                    Don't have an account? <span><a href="{{ path('user_registration') }}">Sign up</a></span>
+                </div>
+
+            </div>
+        </div>
+   </div>
 {% endblock %}
