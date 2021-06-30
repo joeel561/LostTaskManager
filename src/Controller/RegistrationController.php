@@ -13,45 +13,52 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends AbstractController
 {
     /**
-    * @var EntityManagerInterface
-    */
-   private $entityManager;
-   /**
-    * @var \Doctrine\Common\Persistence\ObjectRepository
-    */
-   private $userRepository;
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
-   public function __construct(EntityManagerInterface $entityManager)
-   {
-       $this->entityManager = $entityManager;
-       $this->userRepository = $entityManager->getRepository('App:User');
-   }
+    /**
+     * @var \Doctrine\Common\Persistence\ObjectRepository
+     */
+    private $userRepository;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+        $this->userRepository = $entityManager->getRepository('App:User');
+    }
 
     /**
      * @Route("/register", name="user_registration")
      */
     public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $content = json_decode($request->getContent(), true);
 
-        if($content['email']) {
-            $user = new User();
-            $password = $content['password'];
-            
-            $user->setUsername($content['username']);
-            $user->setEmail($content['email']);
-            $user->setPassword($passwordEncoder->encodePassword($user, $password));
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+
+            // save the User
             $this->updateDatabase($user);
 
-            return $this->json([
-                'user' => $user->getEmail()
-            ]);
+            return $this->redirectToRoute('home');
         }
 
-        return new Response('Error', Response::HTTP_NOT_FOUND);
+
+
+        return $this->render('registration/register.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
-    function updateDatabase($object) 
+
+    function updateDatabase($object)
     {
         $this->entityManager->persist($object);
         $this->entityManager->flush();

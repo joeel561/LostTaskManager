@@ -1,10 +1,9 @@
 global.axios = require('axios');
 
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+//import VueRouter from 'vue-router';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import Multiselect from 'vue-multiselect';
-import App from './components/App';
 import Home from './components/HomeComponent';
 import ProjectOverview from './components/ProjectOverviewComponent';
 import Project from './components/ProjectComponent';
@@ -17,14 +16,12 @@ const detailRoute = require('../../public/js/fos_js_routes.json');
 import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
 import Vue2Editor from "vue2-editor";
 
-const routes = [
-   { path: '/', component: Home },
-   { path: '/projects', component: ProjectOverview },
-   { path: '/notes', component: Notes },
-   { path: '/projects/:id', component:Project },
-   { path: '/login', component: Login},
-   { path: '/register', component: Register}
-]
+//const routes = [
+//   { path: '/', component: Home },
+//   { path: '/projects', component: ProjectOverview },
+//   { path: '/notes', component: Notes },
+//   { path: '/projects/:id', component:Project }
+//]
 
 Routing.setRoutingData(detailRoute);
 global.Routing = Routing;
@@ -33,9 +30,9 @@ Vue.component('headline-component', HeadlineComponent);
 Vue.component('sidebar', Sidebar);
 
 
-const router = new VueRouter({
-   routes 
-})
+//const router = new VueRouter({
+// routes 
+//})
 
 const filter = function(text, length, clamp) {
    clamp = clamp || ''; 
@@ -49,12 +46,11 @@ Vue.filter('truncate', filter);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(Vue2Editor);
-Vue.use(VueRouter);
+//Vue.use(VueRouter);
 const app = new Vue({
    el: '#app',
-   router,
+   //router,
    components: { Home, Login,  ProjectOverview,Project, HeadlineComponent, Sidebar, Multiselect, Notes },
-   render: h => h(App)
 });
 
 export default app;
