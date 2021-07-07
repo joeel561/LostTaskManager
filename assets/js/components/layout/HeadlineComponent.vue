@@ -1,12 +1,13 @@
 <template> 
     <div class='headline-wrapper'>
-        <h1>{{ title }}</h1>
+        <p :class='classes'>{{ title }}</p>
     </div>
 </template>
 <script>
 export default {
     props: {
-        title: String
+        title: String,
+        classes: String
     },
     data: function() {
         return {

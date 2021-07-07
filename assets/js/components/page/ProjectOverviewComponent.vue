@@ -1,58 +1,19 @@
 <template>
-  <div class="col-md-12">
-    <div class="no-projects" v-if="projects">
-      <div class="row">
-        <sidebar></sidebar>
+  <div class="no-projects" v-if="projects">
+    <div class='project-overview--header d-flex'>
+      <div class='col-md-10'>
+        <headline-component title="Projects" classes='h1'></headline-component>
       </div>
-      <div class="row">
-        <div class="col-md-10">
-          <headline-component title="Projects"></headline-component>
-        </div>
-        <div class="d-flex justify-content-end col-md-2">
-          <b-button  @click="modalShow = !modalShow" v-b-modal.modal-prevent-closing>New Project</b-button>
-        </div>
+      <div class="d-flex justify-content-end col-md-2">
+        <b-button  @click="modalShow = !modalShow" v-b-modal.modal-prevent-closing>New Project</b-button>
       </div>
-      <div v-if="projects.length > 0">
-        <b-container class="projects-row">
-          <b-row>
-            <b-col
-              cols="4"
-              lg="2"
-              v-for="project in projects"
-              :key="project.id"
-              >
-              <b-link v-bind:href="getUrl(project.id)">
-                <div class="project-column">
-                  <h3>{{ project.name | truncate(2, "") }}</h3>
-                  <span>{{ project.name | truncate(20, "..") }}</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-arrow-narrow-right"
-                    width="44"
-                    height="44"
-                    viewBox="0 0 24 24"
-                    stroke-width="1"
-                    stroke="#2c3e50"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <line x1="15" y1="16" x2="19" y2="12" />
-                    <line x1="15" y1="8" x2="19" y2="12" />
-                  </svg>
-                </div>
-              </b-link>
-            </b-col>
-          </b-row>
-        </b-container>
-      </div>
-
+    </div>
+    <div v-if="projects.length > 0" class='project-overview--listing'>
+      <projectsListing></projectsListing>
+    </div>
       <div v-else>
         <h3 align="center">You need to create a new project</h3>
       </div>
-
       <!-- Create Project Modal -->
       <b-modal
         id="modal-prevent-closing"
@@ -124,12 +85,16 @@
         </form>
       </b-modal>
     </div>
-  </div>
 </template>
 
 <script>
+import projectsListing from '../element/ProjectsListing';
+
 export default {
   name:"ProjectOverview",
+  components: {
+    projectsListing
+  },
   data: function () {
     return {
       projects: null,
@@ -159,9 +124,6 @@ export default {
   },
 
   methods: {
-    getUrl(id) {
-      return Routing.generate("project_detail", {id:id});  
-    },
     addTag (newTag) {
       const tag = {
         username: newTag
@@ -189,8 +151,6 @@ export default {
     },
     handleOk(bvModalEvt) {
       bvModalEvt.preventDefault();
-
-
       this.handleSubmit();
     },
     handleSubmit() {

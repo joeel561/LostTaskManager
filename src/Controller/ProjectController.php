@@ -43,7 +43,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/projects", name="projectss")
+     * @Route("/projects", name="projects")
      */
     public function index(): Response
     {
@@ -51,7 +51,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/projects/list", name="projects_list")
+     * @Route("/api/projects/list", name="projects_list")
      */
     public function allProjects(): Response
     {
@@ -111,20 +111,6 @@ class ProjectController extends AbstractController
         return new Response('Error', Response::HTTP_NOT_FOUND);
     }
 
-    /**
-     * @Route("/projects/{id}", options={"expose"=true}, name="project_detail")
-    */
-    public function show(Request $request, Project $project)
-    {
-        if ($request->isXmlHttpRequest()) {
-            return new Response($this->serializeObject($project), Response::HTTP_OK);
-        }
-
-        
-        return $this->render('project/detail.html.twig', [
-            'projectId' => $project->getId(),
-        ]);
-    }
 
 
 

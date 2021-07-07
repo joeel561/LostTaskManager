@@ -9,20 +9,24 @@
         </svg>
     </b-button>
     <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title"  bg-variant="dark" :backdrop-variant="variant" shadow backdrop>
-      <template #default="{ hide }">
-        <div class="p-3">
-          <nav class="mb-3">
-              <router-link to="/home">Go to Foo</router-link>
-              <router-view></router-view>
-            <b-nav vertical>
-              <b-nav-item href="/home" @click="hide"><b-icon-grid></b-icon-grid> Dashboard</b-nav-item>
-              <b-nav-item href="/projects" @click="hide"><b-icon-folder></b-icon-folder> Projects</b-nav-item>
-              <b-nav-item href="/chat" @click="hide"><b-icon-chat-dots></b-icon-chat-dots> Chat</b-nav-item>
-              <b-nav-item href="/notes" @click="hide"><b-icon-file-text></b-icon-file-text> Notes</b-nav-item>
-            </b-nav>
-          </nav>
-        </div>
-      </template>
+      <div class="p-3">
+        <nav class="mb-3">
+            <ul class='nav flex-column'>
+              <li class='nav-item'>
+                <router-link to="/home"><b-icon-grid></b-icon-grid> Dashboard</router-link>
+              </li>
+              <li class='nav-item'>
+                <router-link to="/projects"><b-icon-folder></b-icon-folder> Projects</router-link>
+              </li>
+              <li class='nav-item'>
+                <router-link to="/chat"><b-icon-chat-dots></b-icon-chat-dots> Chat</router-link>
+              </li>
+              <li class='nav-item'>
+                <router-link to="/notes"><b-icon-file-text></b-icon-file-text> Notes</router-link>
+              </li>
+            </ul>
+        </nav>
+      </div>
     </b-sidebar>
   </div>
 </template>

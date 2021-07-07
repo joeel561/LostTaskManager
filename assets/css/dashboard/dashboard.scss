@@ -1,0 +1,14 @@
+.dashboard-welcome--text {
+    color: $text-color-light-blue;
+    font-size: 1rem;
+    margin-top: .5rem;
+}
+
+.dashboard-project--listing {
+    margin-top: 15%;
+
+    .projects-row {
+        padding-top: .9375rem;
+        margin-left: -0.125rem;
+    }
+}
