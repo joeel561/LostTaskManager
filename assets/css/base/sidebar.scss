@@ -11,17 +11,18 @@
         }
     }
 
-    .nav-link {
+    .nav-item  a{
         color: #A0A4AA;
         font-size: 0.9em;
         margin-bottom: 0.7em;
         transition: all ease-in .3s;
         padding: 0.7em 1em;
+        display: block;
         svg {
             margin-right: 0.7em;
         }
 
-        &.active {
+        &.router-link-active {
             background: $nav-active;
             border-radius: 1em;
         }
@@ -29,6 +30,7 @@
         &:hover {
             background: $nav-active;
             border-radius: 1em;
+            text-decoration:none;
             transition: ease-out .3s;
         }
     }
