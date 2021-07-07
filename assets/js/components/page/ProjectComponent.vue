@@ -1,9 +1,5 @@
 <template>
   <div class="col-md-12">
-    <div>
-      <div class="row">
-        <sidebar></sidebar>
-      </div>
       <div class="row">
         <div class="col-md-12">
           <headline-component title="Project"></headline-component>
@@ -55,7 +51,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -102,6 +97,8 @@ export default {
         })
         .then(res => {
           this.project.allLocatedTasks.push(res.data);
+
+          console.log(this.project);
         });
         this.newTaskName = '';
     },

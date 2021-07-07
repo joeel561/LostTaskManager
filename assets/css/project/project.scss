@@ -1,4 +1,14 @@
+.project-overview--header {
+    .col-md-10 {
+        padding: 0;
+    }
+}
 
+.project-overview--listing {
+    .ni-col-2 {
+        max-width: 16.6%;
+    }
+}
 .project-column {
     background: #2F8C82;
     border-radius: 1em;
@@ -9,6 +19,9 @@
     justify-content: flex-end;
     margin-bottom: 1em;
     cursor: pointer;
+    text-align: left;
+    font-size: inherit;
+    line-height: 1.2;
 
     h3 {
         font-size: clamp(2em, 2.5vw, 2.6em);
