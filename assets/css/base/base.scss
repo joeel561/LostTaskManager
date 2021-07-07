@@ -9,6 +9,11 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+#app {
+    overflow: hidden;
+    position: relative;
+}
+
 .app-view {
     height: 100%;
 }
@@ -19,17 +24,25 @@ body {
 }
 
 .headline-wrapper {
-    h1 {
+    .h1 {
         color: $white;
         font-size: clamp(1.8em, 2.5vw, 2.8em);
         font-weight: 600;
         margin-bottom: 0;
     }
+
+    .h2 {
+        font-weight: 600;
+        font-size: clamp(1.2em, 2.5vw, 1.75rem);
+    }
+
+    p {
+        color: $white;
+    }
 }
 
+
 .background {
-    overflow: hidden;
-    position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
