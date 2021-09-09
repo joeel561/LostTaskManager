@@ -55,7 +55,6 @@ security:
 
            logout:
                path: /logout
-               target: /
 
 
    # Easy way to control access for large sections of your site
