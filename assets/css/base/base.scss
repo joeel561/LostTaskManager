@@ -1,16 +1,10 @@
-html, body, #app {
-    width: 100%;
-    height: 100%;
-}
-
-
 body {
     background:$background-color;
     font-family: 'Montserrat', sans-serif;
 }
 
 #app {
-    overflow: hidden;
+    overflow-x: hidden;
     position: relative;
 }
 
@@ -18,9 +12,10 @@ body {
     height: 100%;
 }
 
-.container {
+.container-fluid {
     height: 100%;
     padding-top: 2.5em;
+    padding-bottom: 2.5em;
 }
 
 .headline-wrapper {
@@ -62,6 +57,7 @@ body {
         width: 100%;
         top: -13em;
         right: -5em;
+        z-index: -1;
     }
 
     .bg-dots-wrapper {
@@ -93,6 +89,10 @@ body {
     }
 }
 
+.col-12 {
+    padding: 0;
+}
+
 
 .information-panel {
     background: #fff;
@@ -118,10 +118,21 @@ body {
 }
 
 @include media-breakpoint-up(xl) {
+    html, body, #app {
+        width: 100%;
+        height: 100%;
+    }
+
     .background {
         .bg-number-wrapper {
             display: block;
         }
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-xl {
+        max-width: 82.5rem;
     }
 }
 

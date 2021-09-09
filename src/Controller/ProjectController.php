@@ -51,7 +51,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/api/projects/list", name="projects_list")
+     * @Route("/projects/list", name="projects_list")
      */
     public function allProjects(): Response
     {
@@ -111,8 +111,18 @@ class ProjectController extends AbstractController
         return new Response('Error', Response::HTTP_NOT_FOUND);
     }
 
+     /**
+     * @Route("/projects/{id}", options={"expose"=true}, name="project_detail")
+    */
+    public function show(Request $request,int $id)
+    {
+        $project = $this->projectRepository->find($id);
 
+        $jsonContent = $this->serializeObject($project);
 
+        return new Response($jsonContent, Response::HTTP_OK);
+
+    }
 
     public function serializeObject($object)
     { 
@@ -125,7 +135,7 @@ class ProjectController extends AbstractController
 
         $normalizers = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer(array($normalizers), array($encoders));
-        $jsonContent = $serializer->serialize($object, 'json');
+        $jsonContent = $serializer->serialize($object, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['owner']]);
 
         return $jsonContent;
     }

@@ -1,11 +1,20 @@
 <template>
   <div class="no-projects" v-if="projects">
     <div class='project-overview--header d-flex'>
-      <div class='col-md-10'>
+      <div class='col-lg-10 p-0 col-md-9'>
         <headline-component title="Projects" classes='h1'></headline-component>
       </div>
-      <div class="d-flex justify-content-end col-md-2">
-        <b-button  @click="modalShow = !modalShow" v-b-modal.modal-prevent-closing>New Project</b-button>
+      <div class="d-flex justify-content-end col-lg-2 col-md-3 p-0 new-project--btn">
+        <b-button  @click="modalShow = !modalShow" v-b-modal.modal-prevent-closing>
+          <span class='new-project-btn--icon'>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </span>
+          <span class='new-project-btn--text'>New Project</span>
+          </b-button>
       </div>
     </div>
     <div v-if="projects.length > 0" class='project-overview--listing'>
@@ -21,6 +30,7 @@
         title="Create new project"
         @show="resetModal"
         @hidden="resetModal"
+        :centered="true"
         @ok="handleOk"
         v-model="modalShow"
       >

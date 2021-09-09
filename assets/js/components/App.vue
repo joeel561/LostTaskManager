@@ -112,17 +112,9 @@
                 </svg>
             </div>
         </div>
-        <div class='container'>
-            <div class="col-md-12">
-                <div class="row">
-                    <sidebar></sidebar>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <router-view/>
-                    </div>
-                </div>
-            </div>
+        <div class='container-fluid container-xl'>
+            <sidebar></sidebar>
+            <router-view/>
         </div>
     </div>
 </template>
