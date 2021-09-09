@@ -1,9 +1,9 @@
 <template>
-    <b-container class="projects-row">
+    <div class="projects-row">
         <b-row>
             <b-col
-            cols="4"
-            class='ni-col-2'
+            cols="6"
+            class='col-sm-4 ni-col-2'
             v-for="project in computedProj"
             :key="project.id"
             >
@@ -32,7 +32,7 @@
             </b-button>
             </b-col>
         </b-row>
-    </b-container>
+    </div>
 </template>
 <script>
     export default ({
@@ -50,7 +50,6 @@
         created() {
             axios.get("/projects/list").then((res) => {
                 this.projects = res.data;
-                console.log(this.projects);
             });
         },
 
@@ -58,12 +57,6 @@
             computedProj() {
                  return this.maxLimit ? this.projects.slice(0,this.maxLimit) : this.projects
             }
-        },
-        methods: {
-            getUrl(id) {
-            return Routing.generate("project_detail", {id:id});  
-            },
-        },
-
+        }
     });
 </script>

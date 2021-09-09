@@ -4,11 +4,63 @@
     margin-top: .5rem;
 }
 
-.dashboard-project--listing {
-    margin-top: 15%;
+.dashboard-project--listing { 
+    margin-top: 4.375rem;
 
     .projects-row {
-        padding-top: .9375rem;
-        margin-left: -0.125rem;
+        margin-top: 1.875rem;
+    }
+}
+
+
+
+.dashboard-project--detail {
+    .project-task-wrapper {
+        .custom-control-label {
+            span {
+                font-size: .0.9rem;
+                line-height: 1.25rem;
+            }
+
+            &:before {
+                top: .125rem;
+            }
+        }
+
+        .select-tag--box {
+            padding: 0 .3125rem;
+            select {
+                height: 2.1875rem;
+            }
+            
+            .selected-tag {
+                line-height: 2.1875rem;
+                font-size: .75rem;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) { 
+    .dashboard-project--detail {
+        .project-task-wrapper {
+            .list-group-item {
+                padding: .3125rem 0;
+            }
+        }
+    }
+    .dashboard-project--listing {
+        margin-top: 45%;
+    
+        .projects-row {
+            padding-top: .9375rem;
+            margin-left: -0.125rem;
+        }
+    }
+}
+
+@include media-breakpoint-up(xl) { 
+    .dashboard-project--detail {
+        margin-top: -5.3125rem;
     }
 }

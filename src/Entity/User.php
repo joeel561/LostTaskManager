@@ -184,7 +184,7 @@
     */
     public function getNotesList()
     {
-        return $this->ownedProjects;
+        return $this->notesList;
     }
 
     /**

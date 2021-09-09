@@ -35,3 +35,11 @@
         }
     }
 }
+
+@include media-breakpoint-up(md) { 
+    .sidebar-component {
+        .btn {
+            margin-left: -0.1875rem;
+        }
+    }
+}

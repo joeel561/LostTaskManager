@@ -5,10 +5,9 @@
 }
 
 .project-overview--listing {
-    .ni-col-2 {
-        max-width: 16.6%;
-    }
+    margin-top: 3.75rem;
 }
+
 .project-column {
     background: #2F8C82;
     border-radius: 1em;
@@ -34,6 +33,8 @@
     span {
         font-size: 0.9em;
         color: $white;
+        display: inline-block;
+        min-height: 2.1875rem;
     }
 
     .icon-tabler-arrow-narrow-right {
@@ -59,7 +60,77 @@
         }
     }
     .col-2 {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: .625rem;
+        padding-right: .625rem;
+    }
+}
+
+.new-project--btn {
+    flex-wrap: wrap;
+    align-content: center;
+
+    .btn {
+        padding: 0;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: .625rem;
+        text-align: center;
+
+        svg {
+            stroke: #fff;
+        }
+
+        .new-project-btn--text {
+            display: none;
+        }
+    }
+}
+
+@include media-breakpoint-up(sm) { 
+    .project-overview--listing {
+        .ni-col-2 {
+            max-width: 25%;
+        }
+    }
+}
+@include media-breakpoint-up(md) { 
+    .project-overview--listing {
+        .ni-col-2 {
+            max-width: 20%;
+        }
+    }
+
+
+    .new-project--btn {
+        .btn {
+            padding: 0.5rem 1.5rem;
+            height: auto;
+            border-radius: 1.25rem;
+            width: auto;
+
+            .new-project-btn--icon {
+                display: none;
+            }
+    
+            .new-project-btn--text {
+                display: inline-block;
+            }
+        }
+    }
+} 
+
+@include media-breakpoint-up(lg) { 
+    .project-overview--listing {
+        .ni-col-2 {
+            max-width: 15%;
+        }
+    }
+}
+
+@include media-breakpoint-up(xl) { 
+    .project-overview--listing {
+        .ni-col-2 {
+            max-width: 12.8%;
+        }
     }
 }

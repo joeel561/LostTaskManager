@@ -11,13 +11,19 @@
 .modal-body {
     .form-group {
         display: flex;
-        align-items:baseline;
+        align-items:center;
         margin-bottom: 1.5rem;
+
+        div {
+            width: 100%;
+        }
 
         label {
             font-size: 0.8rem;
             padding-right: 1.5rem;
             width: 30%;
+            margin-bottom: 0;
+            min-width: 5.1875rem;
         }
 
         .form-control {
@@ -39,7 +45,7 @@
     #date-picker__value_ {
         width: 80%;
         border: none;
-        line-height: 2.5;
+        line-height: 2;
     }
 
     .bv-no-focus-ring {
@@ -71,6 +77,11 @@
 
 .multiselect__select {
     height: 28px;
+    display: flex;
+    justify-content: flex-end;
+    &::before {
+        top: auto;
+    }
 }
 
 .multiselect__tags {
@@ -140,11 +151,5 @@
     }
     .close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
         opacity: 1;
-    }
-}
-
-@include media-breakpoint-up(md) { 
-    .modal-dialog {
-        margin-top: 9.75rem;
     }
 }

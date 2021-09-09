@@ -8,7 +8,7 @@
             <line x1="6" y1="18" x2="20" y2="18" />
         </svg>
     </b-button>
-    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title"  bg-variant="dark" :backdrop-variant="variant" shadow backdrop>
+    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title"  text-variant="light" bg-variant="dark" :backdrop-variant="variant" shadow backdrop>
       <div class="p-3">
         <nav class="mb-3">
             <ul class='nav flex-column'>
