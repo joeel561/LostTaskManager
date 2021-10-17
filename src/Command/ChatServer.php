@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\Handler;
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
-use LostTaskManager\Chat;
+use App\Component\Chat;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
 class ChatServer extends Command
@@ -25,7 +25,6 @@ class ChatServer extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int 
     {
-
         $server = IoServer::factory(
             new HttpServer(
                 new SessionProvider(
@@ -39,7 +38,6 @@ class ChatServer extends Command
         );
 
         $output->writeln('Server is running');
-    
         $server->run();
 
     }

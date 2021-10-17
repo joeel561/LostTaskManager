@@ -1,5 +1,5 @@
 <?php 
-namespace LostTaskManager;
+namespace App\Component;
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -14,25 +14,32 @@ class Chat implements MessageComponentInterface {
     public function onOpen(ConnectionInterface $conn) 
     {
         $this->clients->attach($conn);
+        $user = $conn->Session->get('_security.last_username');
 
-        $conn->send($conn->Session->get('name'));
+        if (!$user) {
+            $conn->close();
+        }
 
         echo "New connection! ($conn->resourceId})\n";
-
     }
 
     public function onMessage(ConnectionInterface $from, $msg) 
     {
+        $sendDate = new \DateTime();
+        $user = $from->Session->get('_security.last_username');
+        $newMsg["chatText"] = $msg;
+        $newMsg["chatDate"] = $sendDate->getTimestamp();
+        $newMsg["chatUsername"] = $user;
+        
         $numRecv = count($this->clients) - 1;
         echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
             , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
         foreach ($this->clients as $client) {
             if ($from !== $client) {
-                $client->send($msg);
+                $client->send(json_encode($newMsg));
             }
         }
-
     }
 
     public function onClose(ConnectionInterface $conn) 

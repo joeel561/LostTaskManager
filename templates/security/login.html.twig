@@ -21,9 +21,8 @@
                     <div class="form-group col-md-12">
                         <input type="password" id="password" class="form-control" name="_password" value="" autocomplete="off" />
                         <label for="password">Password</label>
-                    </div>
-                    <login type='text' title='Username' id='username'></login>    
-                    <login type='password' title='Password' id='password'></login>                    
+                    </div>           
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>    
                     <div class="form-group submit-btn">
                         <button type="submit" class="btn btn-success">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" viewBox="0 0 24 24" stroke-width="1" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
