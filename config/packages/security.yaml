@@ -1,65 +1,33 @@
 security:
-
-   encoders:
-
-       App\Entity\User:
-
-           algorithm: bcrypt
-
-   # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-
-   providers:
-
-       our_db_provider:
-
-           entity:
-
+    access_denied_url: /login
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+    providers:
+        our_db_provider:
+            entity:
                 class: App\Entity\User
-
                 property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: our_db_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
 
-   firewalls:
-
-       dev:
-
-           pattern: ^/(_(profiler|wdt)|css|images|js)/
-
-           security: false
-
-       main:
-
-#            pattern: ^/
-
-           anonymous: ~
-
-#            http_basic: ~
-
-           provider: our_db_provider
-
-#            anonymous: true
-
-           # activate different ways to authenticate
-           # http_basic: true
-           # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-
-
-           form_login:
-                 login_path: login
-                 check_path: login
-                 default_target_path: /home
-
-#        secured_area:
-
-#            anonymous: ~
-
-           logout:
-               path: /logout
-
-
-   # Easy way to control access for large sections of your site
-   # Note: Only the *first* access control that matches will be used
-
-   access_control:
-        - { path: ^/home, roles: IS_AUTHENTICATED_FULLY }
+            form_login:
+                    login_path: login
+                    check_path: login
+                    default_target_path: /home
+                    always_use_default_target_path: true
+            logout:
+                path: /logout
+                target: login
+    access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }

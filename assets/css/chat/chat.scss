@@ -1,0 +1,120 @@
+.chat-user--panel {
+    background:#101826;
+    border-radius: 1.25rem;
+    padding: 1.25rem 0rem;
+    height: 43.75rem;
+    overflow-y: auto;
+}
+
+.chat-user--wrapper {
+    height: 100vh;
+}
+
+.chat-user--headline {
+    margin-bottom: 1.25rem;
+    padding: 0 .9375rem;
+    align-items: center;
+}
+
+
+.chat-user--icon {
+    .btn {
+        svg {
+            stroke:#fff;
+            width: 1.6875rem;
+            height: 1.6875rem;
+            opacity: 0.5;
+        }
+    }
+}
+
+.chat-wrapper {
+    background-color: #101826;
+    height: 39.375rem;
+    overflow-y:auto;
+    border-radius: 1.5625rem;
+    position: relative;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 1.25rem 1.25rem;
+}
+
+.chat-input-box {
+    background-color: #101826;
+    border-bottom-right-radius: 1.5625rem;
+    border-bottom-left-radius: 1.5625rem;
+    position: relative;
+    padding: .3125rem 1.5625rem 1.25rem 1.5625rem;
+
+    .form-control {
+        border-radius: 1.25rem;
+        height: 2.875rem;
+        border: none;
+        width: 100%;
+        background-color:#141e30;
+    }
+
+    .btn {
+        font-size: 1rem;
+        height: 2.375rem;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        padding: .4375rem 1.25rem;
+        text-align: center;
+        justify-content: center;
+        text-transform: uppercase;
+        line-height: 2.4375rem;
+        border: none;
+        background: rgb(127,0,255);
+        background: linear-gradient(90deg, rgba(127,0,255,1) 0%, rgba(225,0,255,1) 100%);
+        border-radius: 1.25rem;
+        position: absolute;
+        top: .5625rem;
+        right: 1.8125rem;
+
+        &:hover, &:active {
+            text-decoration: none;
+        }
+
+        svg {
+            margin-left: .625rem;
+            stroke: #fff;
+        }
+    }
+}
+
+.chat-user--item {
+    padding: .4375rem .9375rem;
+    background-color: $background-dark-color;
+    color: #fff;
+    font-weight: normal;
+    font-size: .875rem;
+    border-bottom: 1px solid $background-dark-color;
+    transition: all ease-out .3s;
+
+    &:hover {
+        background-color:$dark;
+        transition: all ease-in .3s;
+        cursor: pointer;
+    }
+
+    .user-icon {
+        margin-right: .625rem;  
+        width: 1.875rem;
+        height: 1.875rem;
+        background: rgb(127,0,255);
+        background: linear-gradient(90deg, rgba(127,0,255,1) 0%, rgba(225,0,255,1) 100%);
+        border-radius: 50%;  
+        display: inline-block;
+        line-height: 1.75rem;
+        text-align: center;
+
+        svg {
+            width: 1.875rem;
+            stroke: #fff;
+            opacity: 0.5;
+            height: 1.875rem;
+        }
+    }
+}

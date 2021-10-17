@@ -95,6 +95,7 @@ export default {
   created() {
     axios.get("/notes/list").then((res) => {
       this.notes = res.data;
+      console.log(this.notes);
     });
   },
 
