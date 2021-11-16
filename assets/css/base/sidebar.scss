@@ -36,6 +36,12 @@
     }
 }
 
+#sidebar-no-header {
+    .b-sidebar-header, .b-sidebar-body {
+        background-color: $dark-hover;
+    }
+}
+
 @include media-breakpoint-up(md) { 
     .sidebar-component {
         .btn {

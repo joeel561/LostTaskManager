@@ -36,9 +36,9 @@ class Chat implements MessageComponentInterface {
             , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
         foreach ($this->clients as $client) {
-            if ($from !== $client) {
+            //if ($from !== $client) {
                 $client->send(json_encode($newMsg));
-            }
+            //}
         }
     }
 

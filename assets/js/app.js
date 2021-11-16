@@ -28,6 +28,13 @@ const filter = function(text, length, clamp) {
    return content.length > length ? content.slice(0, length) + clamp : content;
 };
 
+Vue.filter('formatDate', function(value) {
+   if (value) {
+      const date = new Date(value * 1000);
+      return new Intl.DateTimeFormat('en-GB',{ dateStyle: 'short', timeStyle: 'short'}).format(date);
+   }
+})
+
 Vue.filter('truncate', filter);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
