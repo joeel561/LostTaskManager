@@ -226,10 +226,60 @@
         svg {
             width: 1.5625rem;
             height: 1.5625rem;
-            stroke: #fff;
+            stroke: $white;
         }
     }
 }
+
+.chat-user--icon {
+    position: relative;
+}
+
+.chat-user--dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: $nav-active;
+    width: 14.375rem;
+    border-radius: .3125rem;
+    max-height: 12.5rem;
+    overflow-y:auto;
+    padding-bottom: .625rem;
+
+    &.active {
+        display: block;
+    }
+
+    input {
+        border: 0;
+        background-color: $background-color;
+        margin-bottom: .625rem;
+        border-radius: 0;
+        &:focus, &:active {
+            background-color: $nav-active;
+            border-bottom: 1px solid $background-color;
+            box-shadow: none;
+            outline: none;
+        }
+        &:placeholder {
+            color: $white;
+        }
+    }
+
+    div {
+        padding: .625rem .625rem;
+        margin-bottom: .125rem;
+        color: $white;
+        transition: all ease-out .3s;
+        font-size: .875rem;
+
+        &:hover {
+            background-color: $background-color;
+            transition: all ease-in .3s;
+            cursor: pointer;
+        }
+    }
+} 
 
 @include media-breakpoint-up(md) { 
     .chat-user--panel {
