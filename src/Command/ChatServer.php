@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\Handler;
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Component\Chat;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
@@ -16,10 +17,16 @@ class ChatServer extends Command
 {
     protected static $defaultName = 'app:chat-server';
 
-    public function __construct(PdoSessionHandler $sessionHandler)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    public function __construct(PdoSessionHandler $sessionHandler, EntityManagerInterface $entityManager)
     {
         parent::__construct();
         $this->sessionHandler = $sessionHandler;
+        $this->entityManager = $entityManager;
     }
 
 
@@ -29,7 +36,7 @@ class ChatServer extends Command
             new HttpServer(
                 new SessionProvider(
                     new WsServer(
-                        new Chat()
+                        new Chat($this->entityManager)
                     ),
                     $this->sessionHandler
                 )

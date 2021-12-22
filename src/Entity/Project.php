@@ -32,6 +32,12 @@ class Project
     private $owner;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="projectRecipient")
+     */
+
+    private $projectMessages;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="assignedProjects")
     **/
     private $assignedUsers;
@@ -105,6 +111,23 @@ class Project
     {
         return $this->owner;
     }
+
+    /**
+    * @return mixed
+    */
+    public function getProjectMessages()
+    {
+        return $this->projectMessages;
+    }
+
+    /**
+    * @param mixed $projectMessages
+    */
+    public function setProjectMessages($projectMessage)
+    {
+        $this->projectMessages = $projectMessages;
+    }
+
     /**
      * @return mixed
      */

@@ -3,42 +3,83 @@ namespace App\Component;
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\PrivateMessage;
 
 class Chat implements MessageComponentInterface {
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var \Doctrine\Common\Persistence\ObjectRepository
+     */
+    private $privateMessageRepository;
+
     protected $clients;
 
-    public function __construct() {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->clients = new \SplObjectStorage;
+        $this->entityManager = $entityManager;
+        $this->privateMessageRepository = $entityManager->getRepository('App:PrivateMessage');
+        $this->userRepository = $entityManager->getRepository('App:User');
     }
 
     public function onOpen(ConnectionInterface $conn) 
     {
-        $this->clients->attach($conn);
         $user = $conn->Session->get('_security.last_username');
 
         if (!$user) {
             $conn->close();
+            return;
         }
+
+        $this->clients->attach($conn);
 
         echo "New connection! ($conn->resourceId})\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg) 
     {
+        $privatMessages = $this->privateMessageRepository->findAll();
+
         $sendDate = new \DateTime();
-        $user = $from->Session->get('_security.last_username');
-        $newMsg["chatText"] = $msg;
+        $senderId = $from->Session->get('userId');
+        $senderName = $from->Session->get('_security.last_username');
+        $newMsg = json_decode($msg, true);
         $newMsg["chatDate"] = $sendDate->getTimestamp();
-        $newMsg["chatUsername"] = $user;
+        $newMsg["sender"] = ["id" => $senderId, "username" => $senderName];
         
         $numRecv = count($this->clients) - 1;
         echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
-            , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
+        , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
+        
+        $this->storeInDb($newMsg);
 
         foreach ($this->clients as $client) {
-            //if ($from !== $client) {
+            if ($client->Session->get('userId') == $newMsg["recv"] || $client->Session->get('userId') == $senderId) {
                 $client->send(json_encode($newMsg));
-            //}
+            }
+        }
+    }
+
+    private function storeInDb($newMsg) 
+    {
+        $userRecv = $this->userRepository->find($newMsg['recv']);
+        $userSender = $this->userRepository->find($newMsg['sender']['id']);
+        $messageTimestamp = $newMsg['chatDate'];
+
+        if ($newMsg['msg']) {
+            $privatMessage = new PrivateMessage();
+            $privatMessage->setRecipient($userRecv);
+            $privatMessage->setSender($userSender);
+            $privatMessage->setText($newMsg['msg']);
+            $privatMessage->setCreatedAt(new \DateTime("@$messageTimestamp"));
+
+            $this->entityManager->persist($privatMessage);
+            $this->entityManager->flush();
         }
     }
 

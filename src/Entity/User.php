@@ -3,6 +3,7 @@
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Serializer\Annotation\MaxDepth;
     use Symfony\Component\Validator\Constraints as Assert;
     use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     use Symfony\Component\Security\Core\User\UserInterface;
@@ -78,12 +79,29 @@
     private $isActive;
 
     /**
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="owner")
      */
 
     private $ownedProjects;
 
     /**
+     * @MaxDepth(1)
+     * @ORM\OneToMany(targetEntity="App\Entity\PrivateMessage", mappedBy="recipient")
+     */
+
+    private $receivedMessages;
+
+    /**
+     * @MaxDepth(1)
+     * @ORM\OneToMany(targetEntity="App\Entity\PrivateMessage", mappedBy="sender")
+     */
+
+    private $sentMessages;
+
+
+    /**
+    * @MaxDepth(1)
      * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="assignedUsers")
      * @ORM\JoinTable(name="users_projects")
      */
@@ -91,6 +109,7 @@
     private $assignedProjects;
 
     /**
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="App\Entity\Notes", mappedBy="user")
     */
     private $notesList;
@@ -177,6 +196,39 @@
     public function setOwnedProjects($ownedProject)
     {
         $this->ownedProjects = $ownedProjects;
+    }
+
+
+    /**
+    * @return mixed
+    */
+    public function getReceivedMessages()
+    {
+        return $this->receivedMessages;
+    }
+
+    /**
+    * @param mixed $receivedMessages
+    */
+    public function setReceivedMessages($receivedMessages)
+    {
+        $this->receivedMessage = $receivedMessages;
+    }
+
+    /**
+    * @return mixed
+    */
+    public function getSentMessages()
+    {
+        return $this->sentMessages;
+    }
+
+    /**
+    * @param mixed $sentMessages
+    */
+    public function setSentMessages($sentMessages)
+    {
+        $this->sentMessage = $sentMessages;
     }
 
     /**
