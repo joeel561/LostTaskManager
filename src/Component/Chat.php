@@ -5,6 +5,7 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\PrivateMessage;
+use App\Entity\Chatroom;
 
 class Chat implements MessageComponentInterface {
 
@@ -18,12 +19,18 @@ class Chat implements MessageComponentInterface {
      */
     private $privateMessageRepository;
 
+    /**
+     * @var \Doctrine\Common\Persistence\ObjectRepository
+     */
+    private $chatroomRepository;
+
     protected $clients;
 
     public function __construct(EntityManagerInterface $entityManager) {
         $this->clients = new \SplObjectStorage;
         $this->entityManager = $entityManager;
         $this->privateMessageRepository = $entityManager->getRepository('App:PrivateMessage');
+        $this->chatroomRepository = $entityManager->getRepository('App:Chatroom');
         $this->userRepository = $entityManager->getRepository('App:User');
     }
 
@@ -56,13 +63,48 @@ class Chat implements MessageComponentInterface {
         echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
         , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
         
-        $this->storeInDb($newMsg);
+        $this->createChatRoom($newMsg);
 
         foreach ($this->clients as $client) {
             if ($client->Session->get('userId') == $newMsg["recv"] || $client->Session->get('userId') == $senderId) {
                 $client->send(json_encode($newMsg));
             }
         }
+    }
+
+    
+    private function createChatRoom($newMsg) 
+    {
+        $userRecv = $this->userRepository->find($newMsg['recv']);
+        $userSender = $this->userRepository->find($newMsg['sender']['id']);
+        $chatroom = $this->chatroomRepository->find($newMsg['sender']['id']);
+        $messageTimestamp = $newMsg['chatDate'];
+   
+// gib mir den Chatroom wo Sender und Empfänger Teilnehmer sind
+//erstmal nur chatroom vom sender ausgeben
+        $parti1 = $this->chatroomRepository->getParticipants();
+
+       dd($parti1);
+        if ($parti1) {
+            $chatroom = new Chatroom();
+            $chatroom->setParticipant($userSender);
+            $chatroom->setParticipant($userRecv);
+
+            $this->entityManager->persist($chatroom);
+            $this->entityManager->flush();
+        }
+
+        if ($chatroom) {
+            $privatMessage = new PrivateMessage();
+            $privatMessage->setSender($userSender);
+            $privatMessage->setChatroom($chatroom);
+            $privatMessage->setText($newMsg['msg']);
+            $privatMessage->setCreatedAt(new \DateTime("@$messageTimestamp"));
+
+            $this->entityManager->persist($privatMessage);
+            $this->entityManager->flush();
+        }
+
     }
 
     private function storeInDb($newMsg) 
@@ -73,7 +115,6 @@ class Chat implements MessageComponentInterface {
 
         if ($newMsg['msg']) {
             $privatMessage = new PrivateMessage();
-            $privatMessage->setRecipient($userRecv);
             $privatMessage->setSender($userSender);
             $privatMessage->setText($newMsg['msg']);
             $privatMessage->setCreatedAt(new \DateTime("@$messageTimestamp"));
