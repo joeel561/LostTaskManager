@@ -20,9 +20,9 @@ class PrivateMessage
 
     /**
      * @MaxDepth(1)
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="receivedMessages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Chatroom", inversedBy="messages")
      */
-    private $recipient;
+    private $chatroom;
 
     /**
      * @MaxDepth(1)
@@ -45,14 +45,14 @@ class PrivateMessage
         return $this->id;
     }
 
-    public function getRecipient()
+    public function getChatroom()
     {
-        return $this->recipient;
+        return $this->chatroom;
     }
 
-    public function setRecipient(User $newRecipient)
+    public function setChatroom($newChatroom)
     {
-        $this->recipient = $newRecipient;
+        $this->chatroom = $newChatroom;
 
         return $this;
     }

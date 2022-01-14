@@ -87,17 +87,16 @@
 
     /**
      * @MaxDepth(1)
-     * @ORM\OneToMany(targetEntity="App\Entity\PrivateMessage", mappedBy="recipient")
-     */
-
-    private $receivedMessages;
-
-    /**
-     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="App\Entity\PrivateMessage", mappedBy="sender")
      */
 
     private $sentMessages;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Chatroom", inversedBy="participants")
+     *  @ORM\JoinTable(name="chatroom_participants")
+     */
+    private $participant;
 
 
     /**
@@ -120,6 +119,7 @@
 
         $this->isActive = true;
         $this->assignedProjects = new ArrayCollection();
+        $this->participant = new ArrayCollection();
 
     }
 
@@ -198,23 +198,6 @@
         $this->ownedProjects = $ownedProjects;
     }
 
-
-    /**
-    * @return mixed
-    */
-    public function getReceivedMessages()
-    {
-        return $this->receivedMessages;
-    }
-
-    /**
-    * @param mixed $receivedMessages
-    */
-    public function setReceivedMessages($receivedMessages)
-    {
-        $this->receivedMessage = $receivedMessages;
-    }
-
     /**
     * @return mixed
     */
@@ -229,6 +212,24 @@
     public function setSentMessages($sentMessages)
     {
         $this->sentMessage = $sentMessages;
+    }
+
+    /**
+    * @return Collection|Chatroom[]
+    */
+    public function getParticipant(): ?Collection
+    {
+        return $this->participant;
+    }
+
+    public function setParticipant(Chatroom $parti): self
+    {
+        if (!$this->participant->contains($parti)) {
+            $this->participant[] = $parti;
+
+        }
+
+        return $this;
     }
 
     /**

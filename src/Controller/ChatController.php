@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\PrivateMessage;
+use App\Entity\Chatroom;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -24,12 +25,18 @@ class ChatController extends AbstractController
      * @var \Doctrine\Common\Persistence\ObjectRepository
      */
     private $userRepository;
+    
+    /**
+     * @var \Doctrine\Common\Persistence\ObjectRepository
+     */
+    private $chatroomRepository;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->userRepository = $entityManager->getRepository('App:User');
-        $this->chatRepository = $entityManager->getRepository('App:PrivateMessage');
+        $this->chatroomRepository = $entityManager->getRepository('App:Chatroom');
+        $this->chatsRepository = $entityManager->getRepository('App:PrivateMessage');
     }
 
     /**
@@ -47,12 +54,11 @@ class ChatController extends AbstractController
     {
         $sender = ($this->getUser());
         $sendMessage = $this->userRepository->findBy(['id' => $sender]);
-        $pimmel = $this->chatRepository->findBy(['id' => $sender]);
-        $jsonContent = $this->serializeObject($pimmel);
-
-    header('Content-type: application/json; charset=utf-8');
-    print_r($jsonContent);
-        die();
+        $chatrooms = $this->chatroomRepository->findAll();
+        $chat = $this->chatsRepository->findAll();
+    //header('Content-type: application/json; charset=utf-8');
+    dd($chatrooms);
+     //   die();
         return new Response($jsonContent, Response::HTTP_OK);
     }
 
