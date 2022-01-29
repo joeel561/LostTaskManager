@@ -9,6 +9,7 @@
     use Symfony\Component\Security\Core\User\UserInterface;
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
+    use Symfony\Component\Serializer\Annotation\Groups;
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -24,6 +25,7 @@
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"chatroom_user"})
      */
     private $id;
 
@@ -41,7 +43,7 @@
     /**
 
         * @ORM\Column(type="string", length=100, unique=true)
-
+        * @Groups({"chatroom_user"})
         * @Assert\NotBlank()
 
         */
@@ -86,15 +88,18 @@
     private $ownedProjects;
 
     /**
-     * @MaxDepth(1)
+     * @MaxDepth(2)
      * @ORM\OneToMany(targetEntity="App\Entity\PrivateMessage", mappedBy="sender")
+     * 
      */
 
     private $sentMessages;
 
     /**
+     * @MaxDepth(2)
      * @ORM\ManyToMany(targetEntity="App\Entity\Chatroom", inversedBy="participants")
      *  @ORM\JoinTable(name="chatroom_participants")
+     * 
      */
     private $participant;
 
@@ -215,9 +220,9 @@
     }
 
     /**
-    * @return Collection|Chatroom[]
+    * @MaxDepth(1)
     */
-    public function getParticipant(): ?Collection
+    public function getParticipant()
     {
         return $this->participant;
     }

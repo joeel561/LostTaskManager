@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Chatroom;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\User;
 
 /**
  * @method Chatroom|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,17 +21,30 @@ class ChatroomRepository extends ServiceEntityRepository
     }
 
 
-
-    public function getParticipants()
+ 
+    public function getChatrooms(User $sender, User $receiver)
     {
         return $this->createQueryBuilder('c')
-            ->innerJoin('c.participants', 'participant')
-            ->where('c.id = :id')
+            ->where(':sender MEMBER OF c.participants')
+            ->andWhere(':receiver MEMBER OF c.participants')
+            ->setParameters(array('sender' => $sender, 'receiver' => $receiver))
+            ->setMaxResults(1)
             ->getQuery()
             ->getResult()
         ;
     }
+ 
 
+    public function getSenderChatrooms(User $sender)
+    {
+        return $this->createQueryBuilder('c')
+            ->where(':sender MEMBER OF c.participants')
+            ->setParameters(array('sender' => $sender))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+ 
     /*
     public function findOneBySomeField($value): ?Chatroom
     {

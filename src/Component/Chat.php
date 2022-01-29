@@ -36,14 +36,16 @@ class Chat implements MessageComponentInterface {
 
     public function onOpen(ConnectionInterface $conn) 
     {
-        $user = $conn->Session->get('_security.last_username');
+        $user = $this->userRepository->find($conn->Session->get('userId'));
+     
 
         if (!$user) {
             $conn->close();
-            return;
+            return; 
         }
 
         $this->clients->attach($conn);
+        
 
         echo "New connection! ($conn->resourceId})\n";
     }
@@ -77,15 +79,10 @@ class Chat implements MessageComponentInterface {
     {
         $userRecv = $this->userRepository->find($newMsg['recv']);
         $userSender = $this->userRepository->find($newMsg['sender']['id']);
-        $chatroom = $this->chatroomRepository->find($newMsg['sender']['id']);
+        $chatroom = $this->chatroomRepository->getChatrooms($userSender, $userRecv);
         $messageTimestamp = $newMsg['chatDate'];
-   
-// gib mir den Chatroom wo Sender und Empfänger Teilnehmer sind
-//erstmal nur chatroom vom sender ausgeben
-        $parti1 = $this->chatroomRepository->getParticipants();
 
-       dd($parti1);
-        if ($parti1) {
+        if (!$chatroom) {
             $chatroom = new Chatroom();
             $chatroom->setParticipant($userSender);
             $chatroom->setParticipant($userRecv);
@@ -97,31 +94,14 @@ class Chat implements MessageComponentInterface {
         if ($chatroom) {
             $privatMessage = new PrivateMessage();
             $privatMessage->setSender($userSender);
-            $privatMessage->setChatroom($chatroom);
-            $privatMessage->setText($newMsg['msg']);
+            $privatMessage->setChatroom($chatroom[0]);
+            $privatMessage->setText($newMsg['text']);
             $privatMessage->setCreatedAt(new \DateTime("@$messageTimestamp"));
 
             $this->entityManager->persist($privatMessage);
             $this->entityManager->flush();
         }
 
-    }
-
-    private function storeInDb($newMsg) 
-    {
-        $userRecv = $this->userRepository->find($newMsg['recv']);
-        $userSender = $this->userRepository->find($newMsg['sender']['id']);
-        $messageTimestamp = $newMsg['chatDate'];
-
-        if ($newMsg['msg']) {
-            $privatMessage = new PrivateMessage();
-            $privatMessage->setSender($userSender);
-            $privatMessage->setText($newMsg['msg']);
-            $privatMessage->setCreatedAt(new \DateTime("@$messageTimestamp"));
-
-            $this->entityManager->persist($privatMessage);
-            $this->entityManager->flush();
-        }
     }
 
     public function onClose(ConnectionInterface $conn) 

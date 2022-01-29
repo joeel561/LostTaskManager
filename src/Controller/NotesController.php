@@ -124,7 +124,7 @@ class NotesController extends AbstractController
 
         $normalizers = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer(array($normalizers), array($encoders));
-        $jsonContent = $serializer->serialize($object, 'json');
+        $jsonContent = $serializer->serialize($object, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['ownedProjects', 'participant', 'assignedProjects']]);
 
         return $jsonContent;
     }

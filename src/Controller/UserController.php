@@ -49,6 +49,18 @@ class UserController extends AbstractController
         return new Response($jsonContent, Response::HTTP_OK);
     }
 
+    /**
+     * @Route("/users/loggedIn", name="loggedInUser")
+     */
+    public function loggedInUser(): Response
+    {
+        $user = ($this->getUser());
+        $loggedIn = $this->userRepository->find($user);
+        $jsonContent = $this->serializeObject($loggedIn);
+
+        return new Response($jsonContent, Response::HTTP_OK);
+    }
+
     public function serializeObject($object)
     { 
         $encoders = new JsonEncoder();

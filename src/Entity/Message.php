@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=MessageRepository::class)
@@ -14,11 +16,14 @@ class Message
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"chatroom_user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"chatroom_user"})
+     * 
      */
     private $messageId;
 
@@ -29,6 +34,7 @@ class Message
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"chatroom_user"})
      */
     private $text;
 
@@ -42,6 +48,9 @@ class Message
         return $this->id;
     }
 
+        /**
+     * @Groups({"chatroom_user"})
+     */
     public function getMessageId(): ?int
     {
         return $this->messageId;
