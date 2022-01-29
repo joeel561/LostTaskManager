@@ -37,7 +37,7 @@
                     </div>
                 </template>
                 <div class='chat-user--list'>
-                    <div class='chat-user--item' v-on:click="openItem()">
+                    <div class='chat-user--item' v-on:click="openChat(participant.id)"  v-for="participant in computedParticipants" :key="participant.id">
                         <span class='user-icon'>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -46,40 +46,7 @@
                                 <path d="M9.5 15a3.5 3.5 0 0 0 5 0" />
                             </svg>
                         </span> 
-                        <span class='user-name'>waniel.dolf</span>
-                    </div>
-                    <div class='chat-user--item' v-on:click="openItem()">
-                        <span class='user-icon'>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <line x1="9" y1="10" x2="9.01" y2="10" />
-                                <line x1="15" y1="10" x2="15.01" y2="10" />
-                                <path d="M9.5 15a3.5 3.5 0 0 0 5 0" />
-                            </svg>
-                        </span> 
-                        <span class='user-name'>Xeejia</span>
-                    </div>
-                    <div class='chat-user--item' v-on:click="openItem()">
-                        <span class='user-icon'>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <line x1="9" y1="10" x2="9.01" y2="10" />
-                                <line x1="15" y1="10" x2="15.01" y2="10" />
-                                <path d="M9.5 15a3.5 3.5 0 0 0 5 0" />
-                            </svg>
-                        </span> 
-                        <span class='user-name'>Joeels Project</span>
-                    </div>
-                    <div class='chat-user--item' v-on:click="openItem()">
-                        <span class='user-icon'>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <line x1="9" y1="10" x2="9.01" y2="10" />
-                                <line x1="15" y1="10" x2="15.01" y2="10" />
-                                <path d="M9.5 15a3.5 3.5 0 0 0 5 0" />
-                            </svg>
-                        </span> 
-                        <span class='user-name'> Tuc0ws Project</span>
+                        <span class='user-name'>{{ participant.username }}</span>
                     </div>
                 </div>
             </b-sidebar>
@@ -104,7 +71,7 @@
                         </div>
                 </div>
                 <div class='chat-user--list'>
-                    <div class='chat-user--item' v-on:click="openItem()"  v-for="allMsg in allMsgs" :key="allMsg.index">
+                    <div class='chat-user--item' v-on:click="openChat(participant.id)"  v-for="participant in computedParticipants" :key="participant.id">
                         <span class='user-icon'>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -113,7 +80,7 @@
                                 <path d="M9.5 15a3.5 3.5 0 0 0 5 0" />
                             </svg>
                         </span> 
-                        <span class='user-name'></span>
+                        <span class='user-name'>{{ participant.username }}</span>
                     </div>
                 </div>
             </div>
@@ -130,10 +97,10 @@
                                 <path d="M9.5 15a3.5 3.5 0 0 0 5 0" />
                             </svg>
                         </span> 
-                        <span class='chat-text-name'> {{ msg.sender.name }} </span>
+                        <span class='chat-text-name'> {{ msg.sender.username }} </span>
                     </div>
                     <div class='chat-text-messages d-flex flex-column justify-content-center'>
-                        <span>{{ msg.msg }}</span>
+                        <span>{{ msg.text }}</span>
                         <div class='chat-text-timestamp'>
                             {{ msg.chatDate | formatDate }}
                         </div>
@@ -178,11 +145,16 @@ export default {
             keyword:'',
             chat:null,
             username: '',
+            loggedInUser: '',
             users: [],
             sentMessage: [],
             recvMessage:[],
+            chatbox: '',
             allMsgs:[],
-            chatList: '',
+            chatList: [],
+            messages: [],
+            participants: [],
+            participant: '',
             placeholder: "Select user to chat with!",
             activeChat: ''
         };
@@ -191,12 +163,18 @@ export default {
     created() {
         axios.get("/users").then((res) => {
             this.users = res.data;
-            //console.log(this.users);
+           // console.log(this.users);
+        });
+
+        axios.get("/users/loggedIn").then((res) => {
+            this.loggedInUser = res.data;
+            //console.log(this.loggedInUser.id);
         });
 
         axios.get("/chat/list").then((res) => {
             this.chatList = res.data[0];
-            //this.allMsgs = this.chatList.receivedMessages.concat(this.chatList.sentMessages);
+            this.participants = res.data[0].participants;
+            this.messages = res.data[0].messages;
             console.log(this.chatList);
         });
     },
@@ -206,6 +184,17 @@ export default {
         filteredUsers:function() {
             return this.users.filter(
                 cust => cust.username.toLowerCase().includes(this.keyword.toLowerCase())
+            );
+        },
+
+        computedParticipants:function() {
+            return this.participants.filter(
+                participant => participant.id !== this.loggedInUser.id
+            );
+        },
+        computedMessages: function() {
+            return this.messages.filter(
+               message => message.chatroom == this.chatList.id
             );
         }
     },
@@ -223,7 +212,6 @@ export default {
 
         this.connection.onmessage = event => {
             const onMessage = JSON.parse(event.data);
-            console.log(onMessage);
             this.msgs.push(onMessage);
         }
 
@@ -234,16 +222,13 @@ export default {
         sendChat() {
             const msgInfo = {
                 recv: this.activeChat,
-                msg: this.chatInput  
+                text: this.chatInput  
             };
             this.connection.send(JSON.stringify(msgInfo)); 
             this.chatInput = '';
         },
 
         checkName() {
-           // const allMsgs = this.chatList.receivedMessages.concat(this.chatList.sentMessages);
-            console.log(allMsgs);
-
             allMsgs.forEach((allMsg) => {
                 if (userId == user.id) {
                     this.placeholder = `Start Chat with ${user.username}`;
@@ -274,7 +259,20 @@ export default {
 
         },
 
-        // openChat() {}
+        openChat(participantId) {
+            this.$nextTick(() => {
+                this.$refs['chatText'].focus();
+            });
+
+            this.activeChat = participantId;
+            this.messages.push(this.msgs);
+            this.chatList.messages.forEach((message) => {
+               // console.log(message);
+            });
+
+            console.log(this.msgs);
+
+        }
     }
 };
 </script>

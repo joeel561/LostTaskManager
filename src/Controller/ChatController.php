@@ -12,6 +12,9 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ChatController extends AbstractController
@@ -53,27 +56,28 @@ class ChatController extends AbstractController
     public function allPrivateMessage(): Response
     {
         $sender = ($this->getUser());
-        $sendMessage = $this->userRepository->findBy(['id' => $sender]);
-        $chatrooms = $this->chatroomRepository->findAll();
-        $chat = $this->chatsRepository->findAll();
-    //header('Content-type: application/json; charset=utf-8');
-    dd($chatrooms);
-     //   die();
+        $getSenderChatrooms = $this->chatroomRepository->getSenderChatrooms($sender);
+        
+        $jsonContent = $this->serializeObject($getSenderChatrooms);
+
         return new Response($jsonContent, Response::HTTP_OK);
     }
 
     public function serializeObject($object)
     { 
         $encoders = new JsonEncoder();
+
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($obj) {
                 return $obj->getId();
             }
         ];
 
-        $normalizers = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+
+        $normalizers = new ObjectNormalizer($classMetadataFactory, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer([$normalizers], [$encoders]);
-        $jsonContent = $serializer->serialize($object, 'json', [ AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true, AbstractNormalizer::ATTRIBUTES => ['sender' => ['sentMessages'], 'recipient' => ['receivedMessages']]]);
+        $jsonContent = $serializer->serialize($object, 'json', [AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true, 'groups' => 'chatroom_user']);
 
         return $jsonContent;
     }

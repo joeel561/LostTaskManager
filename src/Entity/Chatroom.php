@@ -6,6 +6,7 @@ use App\Repository\ChatroomRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
@@ -17,6 +18,7 @@ class Chatroom
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"chatroom_user"})
      */
     private $id;
 
@@ -24,19 +26,26 @@ class Chatroom
     /**
      * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="App\Entity\PrivateMessage", mappedBy="chatroom")
+     * @Groups({"chatroom_user"})
+     *  
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="participant")
+     *  @Groups({"chatroom_user"})
     */
     private $participants;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /** 
+     * @Groups({"chatroom_user"})
+    */
     public function getMessages()
     {
         return $this->messages;
