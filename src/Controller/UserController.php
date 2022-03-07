@@ -44,7 +44,7 @@ class UserController extends AbstractController
     public function index()
     {
         $user = $this->userRepository->findAll();
-        $jsonContent = $this->serializeObject($user);
+        $jsonContent = $this->serializeObject($user, ['username','id']);
 
         return new Response($jsonContent, Response::HTTP_OK);
     }
@@ -56,12 +56,12 @@ class UserController extends AbstractController
     {
         $user = ($this->getUser());
         $loggedIn = $this->userRepository->find($user);
-        $jsonContent = $this->serializeObject($loggedIn);
+        $jsonContent = $this->serializeObject($loggedIn, ['email', 'username','id']);
 
         return new Response($jsonContent, Response::HTTP_OK);
     }
 
-    public function serializeObject($object)
+    public function serializeObject($object, $attributes)
     { 
         $encoders = new JsonEncoder();
         $defaultContext = [
@@ -72,7 +72,7 @@ class UserController extends AbstractController
 
         $normalizers = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer(array($normalizers), array($encoders));
-        $jsonContent = $serializer->serialize($object, 'json', [AbstractNormalizer::ATTRIBUTES => ['email', 'username','id']]);
+        $jsonContent = $serializer->serialize($object, 'json', [AbstractNormalizer::ATTRIBUTES => $attributes]);
 
         return $jsonContent;
     }
