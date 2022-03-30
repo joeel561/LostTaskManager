@@ -116,12 +116,16 @@ class ProjectController extends AbstractController
     */
     public function show(Request $request,int $id)
     {
-        $project = $this->projectRepository->find($id);
+        $projectsAssigned = $this->projectRepository->getProjectsAssigned($this->getUser());
+        
+        foreach ($projectsAssigned as $project) {
+            if ($id == $project->getId()) {
+                $jsonContent = $this->serializeObject($project);
+                return new Response($jsonContent, Response::HTTP_OK);
+            }
+        }
 
-        $jsonContent = $this->serializeObject($project);
-
-        return new Response($jsonContent, Response::HTTP_OK);
-
+        return new Response('Error', Response::HTTP_NOT_FOUND);
     }
 
     public function serializeObject($object)

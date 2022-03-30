@@ -60,7 +60,6 @@ class ChatController extends AbstractController
         $sender = ($this->getUser());
         $getSenderChatrooms = $this->chatroomRepository->getSenderChatrooms($sender);
         $jsonContent = $this->serializeObject($getSenderChatrooms);
-      //  dd($getSenderChatrooms);
         return new Response($jsonContent, Response::HTTP_OK);
     }
 

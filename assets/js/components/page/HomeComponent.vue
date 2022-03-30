@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class='col-12 col-lg-7 dashboard-project--detail'>
-      <project v-bind:id='1'></project>
+      <project v-bind:id='projects[0].id'></project>
     </div>
   </div>
       <div v-else class="d-flex justify-content-center flex-lg-row flex-column">
