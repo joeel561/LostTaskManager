@@ -40,6 +40,7 @@ class Message
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"chatroom_user"})
      */
     private $createdAt;
 

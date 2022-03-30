@@ -1,0 +1,15 @@
+.alert {
+    border-radius: 1.25rem;
+
+    &.alert-danger {
+        border-color: transparent;
+        color: $white;
+        background-color: #c53441;
+    }
+
+    .close {
+        &:hover {
+            color: $white;
+        }
+    }
+}

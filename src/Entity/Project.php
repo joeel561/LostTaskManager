@@ -18,11 +18,11 @@ class Project
      */
     private $id;
     /**
-     * @ORM\Column(type="string", name="name", length=20)
+     * @ORM\Column(type="text")
      */
     private $name;
     /**
-     * @ORM\Column(type="string", name="description", length=200)
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -30,12 +30,6 @@ class Project
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ownedProjects")
      */
     private $owner;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="projectRecipient")
-     */
-
-    private $projectMessages;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="assignedProjects")
@@ -112,21 +106,6 @@ class Project
         return $this->owner;
     }
 
-    /**
-    * @return mixed
-    */
-    public function getProjectMessages()
-    {
-        return $this->projectMessages;
-    }
-
-    /**
-    * @param mixed $projectMessages
-    */
-    public function setProjectMessages($projectMessage)
-    {
-        $this->projectMessages = $projectMessages;
-    }
 
     /**
      * @return mixed
@@ -210,6 +189,4 @@ class Project
     {
         $this->allLocatedTasks = $allLocatedTasks;
     }
-
-
 }

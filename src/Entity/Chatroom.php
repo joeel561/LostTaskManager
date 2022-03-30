@@ -18,22 +18,22 @@ class Chatroom
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"chatroom_user"})
+     * @Groups({"chatroom_user", "privat_messages"})
+     * 
      */
     private $id;
 
 
     /**
-     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="App\Entity\PrivateMessage", mappedBy="chatroom")
-     * @Groups({"chatroom_user"})
-     *  
+     * @Groups({"privat_messages"})
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="participant")
-     *  @Groups({"chatroom_user"})
+     * @MaxDepth(2)
+     * 
     */
     private $participants;
 
@@ -44,7 +44,6 @@ class Chatroom
     }
 
     /** 
-     * @Groups({"chatroom_user"})
     */
     public function getMessages()
     {
@@ -64,6 +63,7 @@ class Chatroom
 
     /**
      * @return Collection|User[]
+     * @Groups({"chatroom_user"})
      */
     public function getParticipants(): ?Collection
     {

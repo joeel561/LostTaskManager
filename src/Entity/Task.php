@@ -16,11 +16,11 @@ class Task
      */
     private $id;
     /**
-     * @ORM\Column(type="string", name="name", length=100)
+     * @ORM\Column(type="text")
      */
     private $name;
     /**
-     * @ORM\Column(type="string", name="tag", length=100, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $tag;
     /**

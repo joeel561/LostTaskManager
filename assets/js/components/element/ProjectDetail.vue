@@ -3,6 +3,11 @@
       <div class='project-information pl-4 pr-4 pl-md-0 pr-md-0' v-if='project !== null'>
           <h2>{{project.name}}</h2>
           <p> {{project.description}}</p>
+
+          <div class='d-flex'>
+            <h5 class='mr-3'>Deadline:</h5>
+            <p>{{timestamp|formatDeadline}} </p>
+          </div>
           <div class='d-flex'>
             <h5 class='mr-3'>Project Member:</h5>
             <div class='project-user-assigned' v-for="user in project.assignedUsers" :key='user.username'>
@@ -41,9 +46,6 @@
           </b-list-group>
         </div>
       </div>
-      <div class='project-inbox-wrapper pl-4 pr-4 pl-md-0 pr-md-0'>
-        <h2>Inbox</h2>
-      </div>
   </div>
 </template>
 
@@ -59,15 +61,17 @@ export default {
         { text: 'In progress'},
         { text: 'Approved'},
       ],
-      project: ''
+      project: '',
+      timestamp: '',
     };
   },
 
   props: ['id'],
 
   created() {
-    axios.get(`/projects/${this.id}`).then((res) => {
+    axios.get(`/projects/list/${this.id}`).then((res) => {
       this.project = res.data;
+      this.timestamp = res.data.date.timestamp;
     });
     
   },
@@ -92,8 +96,6 @@ export default {
         })
         .then(res => {
           this.project.allLocatedTasks.push(res.data);
-
-          console.log(this.project);
         });
         this.newTaskName = '';
     },

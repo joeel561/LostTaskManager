@@ -1,5 +1,4 @@
 security:
-    access_denied_url: /login
     encoders:
         App\Entity\User:
             algorithm: bcrypt
@@ -15,15 +14,11 @@ security:
         main:
             lazy: true
             provider: our_db_provider
+            anonymous: true
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
 
-            form_login:
-                    login_path: login
-                    check_path: login
-                    default_target_path: /home
-                    always_use_default_target_path: true
             logout:
                 path: /logout
                 target: login

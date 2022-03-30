@@ -112,7 +112,7 @@ class ProjectController extends AbstractController
     }
 
      /**
-     * @Route("/projects/{id}", options={"expose"=true}, name="project_detail")
+     * @Route("/projects/list/{id}", options={"expose"=true}, name="project_detail")
     */
     public function show(Request $request,int $id)
     {
@@ -135,7 +135,7 @@ class ProjectController extends AbstractController
 
         $normalizers = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer(array($normalizers), array($encoders));
-        $jsonContent = $serializer->serialize($object, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['owner']]);
+        $jsonContent = $serializer->serialize($object, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['owner', 'participant' ,'plainPassword', 'password', 'sentMessages', 'notesList']]);
 
         return $jsonContent;
     }

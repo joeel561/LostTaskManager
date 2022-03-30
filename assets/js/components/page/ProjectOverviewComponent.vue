@@ -18,10 +18,43 @@
       </div>
     </div>
     <div v-if="projects.length > 0" class='project-overview--listing'>
-      <projectsListing></projectsListing>
+      <div class="projects-row">
+        <b-row>
+            <b-col
+            cols="6"
+            class='col-sm-4 ni-col-2'
+            v-for="project in this.projects"
+            :key="project.id"
+            >
+            <b-button :to="{ name: 'project', params: {id: project.id} }" class='project-column'>
+                <div>
+                    <h3>{{ project.name | truncate(2, "") }}</h3>
+                    <span>{{ project.name | truncate(20, "..") }}</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-arrow-narrow-right"
+                        width="44"
+                        height="44"
+                        viewBox="0 0 24 24"
+                        stroke-width="1"
+                        stroke="#2c3e50"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <line x1="15" y1="16" x2="19" y2="12" />
+                        <line x1="15" y1="8" x2="19" y2="12" />
+                    </svg>
+                </div>
+            </b-button>
+            </b-col>
+        </b-row>
+    </div>
     </div>
       <div v-else>
-        <h3 align="center">You need to create a new project</h3>
+        <h3 align="center" class="text-white mt-4">You need to create a new project</h3>
       </div>
       <!-- Create Project Modal -->
       <b-modal
@@ -98,16 +131,12 @@
 </template>
 
 <script>
-import projectsListing from '../element/ProjectsListing';
-
 export default {
   name:"ProjectOverview",
-  components: {
-    projectsListing
-  },
+
   data: function () {
     return {
-      projects: null,
+      projects: [],
       newDate: "",
       newDescription: "",
       newProjectName: "",
@@ -132,7 +161,7 @@ export default {
       this.users = res.data;
     });
   },
-
+  
   methods: {
     addTag (newTag) {
       const tag = {
@@ -141,6 +170,7 @@ export default {
       this.users.push(tag)
       this.newUser.push(tag)
     },
+
     checkFormValidity() {
       const valid = this.$refs.form.checkValidity();
       this.nameState,
@@ -149,6 +179,7 @@ export default {
         (this.descriptionState = valid);
       return valid;
     },
+
     resetModal() {
       this.newProjectName = "";
       this.newDate = "";

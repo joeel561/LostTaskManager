@@ -16,7 +16,7 @@
 }
 
 
-.chat-user--icon {
+.chat-user--icon, .delete--icon {
     .btn {
         svg {
             stroke:#fff;
@@ -24,6 +24,18 @@
             height: 1.6875rem;
             opacity: 0.5;
         }
+    }
+}
+
+.delete--icon {
+    margin-left: auto;
+}
+
+
+#deleteModal {
+    .modal-content {
+        background-color: $background-color;
+        color: $white;
     }
 }
 
@@ -36,6 +48,10 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     padding: .9375rem;
+
+    .alert-danger {
+        margin-bottom: 0;
+    }
 }
 
 .chat-input-box {
@@ -90,6 +106,20 @@
     font-size: .875rem;
     border-bottom: 1px solid $background-dark-color;
     transition: all ease-out .3s;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .chatroom-delete {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        width: 3.125rem;
+    }
+
+    &.active {
+        background-color:$dark-hover;
+    }
 
     &:hover {
         background-color:$dark-hover;
@@ -122,7 +152,7 @@
     position: relative;
     border-radius: 1.25rem;
     background: #1a263b;
-    margin-bottom: .9375rem;
+    margin-bottom: 1.25rem;
 
     .user-icon {
         width: 2.1875rem;
@@ -238,13 +268,15 @@
 .chat-user--dropdown {
     display: none;
     position: absolute;
-    right: 0;
+    left: .6875rem;
+    top: 2.8125rem;
     background-color: $nav-active;
-    width: 14.375rem;
+    width: 10.625rem;
     border-radius: .3125rem;
     max-height: 12.5rem;
     overflow-y:auto;
     padding-bottom: .625rem;
+    z-index: 75;
 
     &.active {
         display: block;
@@ -266,22 +298,59 @@
         }
     }
 
-    div {
+    span {
         padding: .625rem .625rem;
         margin-bottom: .125rem;
         color: $white;
         transition: all ease-out .3s;
         font-size: .875rem;
-
-        &:hover {
-            background-color: $background-color;
-            transition: all ease-in .3s;
-            cursor: pointer;
-        }
+        display: block;
     }
 } 
 
+.dropdown--overlay {
+    position: fixed;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    padding: 0;
+    z-index: 70;
+
+    &.active {
+        display: block;
+    }
+}
+
+#chat-box--spacer {
+    display: inline-block;
+    width: 100%;
+    min-height: .625rem;
+    background-color: #101826;
+}
+
 @include media-breakpoint-up(md) { 
+    .chat-user--dropdown {
+        right: 0;
+        width: 14.375rem;
+        max-height: 12.5rem;
+        padding-bottom: .625rem;
+        left: auto;
+    
+        span {
+            padding: .625rem .625rem;
+            margin-bottom: .125rem;
+            font-size: .875rem;
+    
+            &:hover {
+                background-color: $background-color;
+                transition: all ease-in .3s;
+                cursor: pointer;
+            }
+        }
+    } 
+
     .chat-user--panel {
         height: 43.75rem;
     }
@@ -306,7 +375,7 @@
     }
 
     .chat-wrapper {
-        height: 39.375rem;
+        max-height: 39.375rem;
         padding: 1.25rem 1.25rem;
     }
 }

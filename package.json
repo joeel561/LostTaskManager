@@ -1,5 +1,6 @@
 {
     "devDependencies": {
+        "@babel/plugin-transform-runtime": "^7.17.0",
         "@symfony/webpack-encore": "^0.33.0",
         "bootstrap": "^4.5.3",
         "core-js": "^3.0.0",
@@ -19,6 +20,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@babel/runtime": "^7.17.2",
         "axios": "^0.21.1",
         "bootstrap-scss": "4.5.2",
         "bootstrap-vue": "^2.18.1",

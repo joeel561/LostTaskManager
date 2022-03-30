@@ -30,8 +30,15 @@ const filter = function(text, length, clamp) {
 
 Vue.filter('formatDate', function(value) {
    if (value) {
-      const date = new Date(value * 1000);
+      const date = new Date(value);
       return new Intl.DateTimeFormat('en-GB',{ dateStyle: 'short', timeStyle: 'short'}).format(date);
+   }
+})
+
+Vue.filter('formatDeadline', function(value) {
+   if (value) {
+      const date = new Date(value * 1000);
+      return new Intl.DateTimeFormat('en-GB',{ dateStyle: 'short'}).format(date);
    }
 })
 

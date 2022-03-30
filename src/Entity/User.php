@@ -25,7 +25,7 @@
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"chatroom_user"})
+     * @Groups({"chatroom_user", "privat_messages"})
      */
     private $id;
 
@@ -43,7 +43,7 @@
     /**
 
         * @ORM\Column(type="string", length=100, unique=true)
-        * @Groups({"chatroom_user"})
+        * @Groups({"chatroom_user", "privat_messages"})
         * @Assert\NotBlank()
 
         */
@@ -73,10 +73,8 @@
     private $password;
 
     /**
-
-        * @ORM\Column(name="is_active", type="boolean")
-
-        */
+    * @ORM\Column(name="is_active", type="boolean")
+    */
 
     private $isActive;
 
@@ -90,7 +88,6 @@
     /**
      * @MaxDepth(2)
      * @ORM\OneToMany(targetEntity="App\Entity\PrivateMessage", mappedBy="sender")
-     * 
      */
 
     private $sentMessages;
@@ -205,6 +202,7 @@
 
     /**
     * @return mixed
+    *   
     */
     public function getSentMessages()
     {
@@ -220,7 +218,7 @@
     }
 
     /**
-    * @MaxDepth(1)
+     * 
     */
     public function getParticipant()
     {

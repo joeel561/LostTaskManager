@@ -57,8 +57,9 @@ class Chat implements MessageComponentInterface {
         $sendDate = new \DateTime();
         $senderId = $from->Session->get('userId');
         $senderName = $from->Session->get('_security.last_username');
+        $messageTimestamp = $sendDate->getTimestamp();
         $newMsg = json_decode($msg, true);
-        $newMsg["chatDate"] = $sendDate->getTimestamp();
+        $newMsg["createdAt"] = date('m/d/Y H:i:s', $messageTimestamp);
         $newMsg["sender"] = ["id" => $senderId, "username" => $senderName];
         
         $numRecv = count($this->clients) - 1;
@@ -79,10 +80,10 @@ class Chat implements MessageComponentInterface {
     {
         $userRecv = $this->userRepository->find($newMsg['recv']);
         $userSender = $this->userRepository->find($newMsg['sender']['id']);
-        $chatroom = $this->chatroomRepository->getChatrooms($userSender, $userRecv);
-        $messageTimestamp = $newMsg['chatDate'];
+        $chatrooms = $this->chatroomRepository->getChatrooms($userSender, $userRecv);
+        $messageTimestamp = $newMsg['createdAt'];
 
-        if (!$chatroom) {
+        if (!$chatrooms) {
             $chatroom = new Chatroom();
             $chatroom->setParticipant($userSender);
             $chatroom->setParticipant($userRecv);
@@ -91,16 +92,21 @@ class Chat implements MessageComponentInterface {
             $this->entityManager->flush();
         }
 
-        if ($chatroom) {
-            $privatMessage = new PrivateMessage();
-            $privatMessage->setSender($userSender);
-            $privatMessage->setChatroom($chatroom[0]);
-            $privatMessage->setText($newMsg['text']);
-            $privatMessage->setCreatedAt(new \DateTime("@$messageTimestamp"));
+        $privatMessage = new PrivateMessage();
+        $privatMessage->setSender($userSender);
+        $privatMessage->setText($newMsg['text']);
+        $privatMessage->setCreatedAt(new \DateTime("$messageTimestamp"));
 
-            $this->entityManager->persist($privatMessage);
-            $this->entityManager->flush();
+        if (!empty($chatrooms)) {
+            $privatMessage->setChatroom($chatrooms[0]);
         }
+
+        if (!empty($chatroom)) {
+            $privatMessage->setChatroom($chatroom);
+        }
+
+        $this->entityManager->persist($privatMessage);
+        $this->entityManager->flush();
 
     }
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use App\Repository\PrivateMessageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use DateTimeInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -13,35 +14,38 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class PrivateMessage
 {
     /**
-     * @MaxDepth(1)
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"chatroom_user"})
+     * @Groups({"privat_messages"})
      */
     private $id;
 
     /**
-     * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity="App\Entity\Chatroom", inversedBy="messages")
+     * @MaxDepth(2)
+     * @Groups({"privat_messages"})
+     *  @ORM\JoinColumn(onDelete="CASCADE")
      * 
      */
     private $chatroom;
 
     /**
-     * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sentMessages")
-     * * @Groups({"chatroom_user"})
+     * @MaxDepth(2)
+     * @Groups({"privat_messages"})
      */
     private $sender;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"privat_messages"})
      */
     private $text;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"privat_messages"})
      */
     private $createdAt;
 
@@ -49,10 +53,7 @@ class PrivateMessage
     {
         return $this->id;
     }
-    /**
-     * @Groups({"chatroom_user"})
-     */
-
+    
     public function getChatroom()
     {
         return $this->chatroom;
@@ -96,15 +97,18 @@ class PrivateMessage
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-
-        return $this;
     }
 }
