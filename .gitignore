@@ -7,8 +7,6 @@
 /public/bundles/
 /var/
 /vendor/
-/.env
-/.env.test
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -29,3 +27,6 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 bin/phpunit
+.env
+.env.test
+*.test

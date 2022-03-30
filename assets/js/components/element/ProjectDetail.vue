@@ -96,6 +96,8 @@ export default {
         })
         .then(res => {
           this.project.allLocatedTasks.push(res.data);
+
+          console.log(this.project);
         });
         this.newTaskName = '';
     },

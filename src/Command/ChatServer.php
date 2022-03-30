@@ -41,7 +41,7 @@ class ChatServer extends Command
                     $this->sessionHandler
                 )
             ),
-            8080
+            5050
         );
 
         $output->writeln('Server is running');

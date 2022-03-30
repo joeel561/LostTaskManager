@@ -67,7 +67,7 @@
         @ok="handleOk"
         v-model="modalShow"
       >
-        <form ref="form" @submit.stop.prevent="handleSubmit">
+        <b-from validate="true" ref="form" @submit.stop.prevent="handleSubmit">
           <b-form-group
             :state="nameState"
             label="Name"
@@ -125,7 +125,7 @@
               max-rows="6"
             ></b-form-textarea>
           </b-form-group>
-        </form>
+        </b-from>
       </b-modal>
     </div>
 </template>
