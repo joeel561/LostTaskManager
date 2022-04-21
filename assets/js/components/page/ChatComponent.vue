@@ -252,7 +252,7 @@ export default {
     },
 
     mounted() {
-        this.connection = new WebSocket('ws://losttaskmanager.com:5050');
+        this.connection = new WebSocket('wss://losttaskmanager.com:5050');
 
         this.connection.onmessage = event => {
             const onMessage = JSON.parse(event.data);
